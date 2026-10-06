@@ -1,0 +1,51 @@
+{
+ "frontend": {
+  "title": "Frontend Development",
+  "required": [
+   "HTML",
+   "CSS",
+   "JavaScript",
+   "React"
+  ],
+  "preferred": [
+   "TypeScript",
+   "Accessibility",
+   "Testing",
+   "Git",
+   "REST APIs"
+  ]
+ },
+ "backend": {
+  "title": "Backend Development",
+  "required": [
+   "Server-side language",
+   "SQL",
+   "REST APIs",
+   "Git"
+  ],
+  "preferred": [
+   "Laravel",
+   "PostgreSQL",
+   "Authentication",
+   "Testing",
+   "Queues",
+   "Caching"
+  ]
+ },
+ "data": {
+  "title": "Data Analysis",
+  "required": [
+   "SQL",
+   "Python",
+   "Data cleaning",
+   "Data visualization",
+   "Statistics"
+  ],
+  "preferred": [
+   "pandas",
+   "Excel",
+   "Tableau or Power BI",
+   "A/B testing"
+  ]
+ }
+}

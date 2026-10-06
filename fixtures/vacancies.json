@@ -1,0 +1,97 @@
+[
+ {
+  "id": "v01",
+  "title": "Frontend Intern",
+  "role": "frontend",
+  "company": "Pixel Harbor Studio (fictional)",
+  "location": "Karachi (hybrid)",
+  "level": "intern",
+  "version": 1,
+  "required": [
+   "HTML",
+   "CSS",
+   "JavaScript"
+  ],
+  "preferred": [
+   "React",
+   "Git"
+  ]
+ },
+ {
+  "id": "v02",
+  "title": "Junior Frontend Developer",
+  "role": "frontend",
+  "company": "Nimbus Labs (fictional)",
+  "location": "Karachi (hybrid)",
+  "level": "junior",
+  "version": 1,
+  "required": [
+   "HTML",
+   "CSS",
+   "JavaScript",
+   "React"
+  ],
+  "preferred": [
+   "TypeScript",
+   "Accessibility",
+   "Testing"
+  ]
+ },
+ {
+  "id": "v03",
+  "title": "Backend Intern",
+  "role": "backend",
+  "company": "Cobalt Systems (fictional)",
+  "location": "Karachi (hybrid)",
+  "level": "intern",
+  "version": 1,
+  "required": [
+   "Server-side language",
+   "SQL",
+   "Git"
+  ],
+  "preferred": [
+   "REST APIs",
+   "Laravel"
+  ]
+ },
+ {
+  "id": "v04",
+  "title": "Junior Backend Developer",
+  "role": "backend",
+  "company": "Arbor Software (fictional)",
+  "location": "Karachi (hybrid)",
+  "level": "junior",
+  "version": 1,
+  "required": [
+   "Server-side language",
+   "SQL",
+   "REST APIs",
+   "Git"
+  ],
+  "preferred": [
+   "PostgreSQL",
+   "Queues",
+   "Testing"
+  ]
+ },
+ {
+  "id": "v05",
+  "title": "Data Analyst Intern",
+  "role": "data",
+  "company": "Harbor Retail (fictional)",
+  "location": "Karachi (hybrid)",
+  "level": "intern",
+  "version": 1,
+  "required": [
+   "SQL",
+   "Python",
+   "Data visualization"
+  ],
+  "preferred": [
+   "pandas",
+   "Excel",
+   "Statistics"
+  ]
+ }
+]
