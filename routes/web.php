@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VacancyController;
-
+use App\Http\Controllers\OrganizationController;
 Route::inertia('/', 'welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+Route::inertia('dashboard', 'dashboard')->name('dashboard');
+Route::post('organizations', [OrganizationController::class, 'store']);
+Route::post('organizations/{organization}/approve', [OrganizationController::class, 'approve']);
 });
 
 require __DIR__.'/settings.php';
