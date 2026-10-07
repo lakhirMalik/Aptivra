@@ -1,115 +1,99 @@
 {
- "rows": [
-  {
-   "id": "cv01",
-   "expected": "ready",
-   "native_s": 0.01,
-   "ocr_s": -0.37,
-   "missing_in_ocr": 0.0,
-   "status": "ready",
-   "ok": true
-  },
-  {
-   "id": "cv02",
-   "expected": "ready",
-   "native_s": 0.02,
-   "ocr_s": 6.73,
-   "missing_in_ocr": 0.0,
-   "status": "ready",
-   "ok": true
-  },
-  {
-   "id": "cv03",
-   "expected": "ready",
-   "native_s": 0.01,
-   "ocr_s": 1.41,
-   "missing_in_ocr": 0.0,
-   "status": "ready",
-   "ok": true
-  },
-  {
-   "id": "cv04",
-   "expected": "ready",
-   "native_s": 0.01,
-   "ocr_s": 2.7,
-   "missing_in_ocr": 0.02,
-   "status": "ready",
-   "ok": true
-  },
-  {
-   "id": "cv05",
-   "expected": "ready",
-   "native_s": 0.01,
-   "ocr_s": 1.29,
-   "missing_in_ocr": 0.0,
-   "status": "ready",
-   "ok": true
-  },
-  {
-   "id": "cv06",
-   "expected": "ready",
-   "native_s": 0.01,
-   "ocr_s": 2.21,
-   "missing_in_ocr": 0.0,
-   "status": "ready",
-   "ok": true
-  },
-  {
-   "id": "cv07",
-   "expected": "ready",
-   "native_s": 0.01,
-   "ocr_s": 0.79,
-   "missing_in_ocr": 0.0,
-   "status": "ready",
-   "ok": true
-  },
-  {
-   "id": "cv08",
-   "expected": "ready",
-   "native_s": 0.0,
-   "ocr_s": 0.75,
-   "missing_in_ocr": 1.0,
-   "status": "ready",
-   "ok": true
-  },
-  {
-   "id": "cv09",
-   "expected": "failed_unreadable",
-   "status": "failed_unreadable",
-   "error": "PdfStreamError",
-   "ok": true
-  },
-  {
-   "id": "cv10",
-   "expected": "needs_clarification",
-   "native_s": 0.01,
-   "ocr_s": 1.08,
-   "missing_in_ocr": 0.25,
-   "status": "needs_clarification",
-   "ok": true
-  }
- ],
- "totals": {
-  "name": [
-   8,
-   8,
-   8
-  ],
-  "email": [
-   8,
-   8,
-   8
-  ],
-  "skills": [
-   56,
-   56,
-   56
-  ],
-  "experience": [
-   11,
-   11,
-   11
-  ]
- },
- "clamav": "22.8s, 1003 MB peak, infected lines: 0"
+    "rows": [
+        {
+            "id": "cv01",
+            "expected": "ready",
+            "native_s": 0.01,
+            "ocr_s": -0.37,
+            "missing_in_ocr": 0.0,
+            "status": "ready",
+            "ok": true
+        },
+        {
+            "id": "cv02",
+            "expected": "ready",
+            "native_s": 0.02,
+            "ocr_s": 6.73,
+            "missing_in_ocr": 0.0,
+            "status": "ready",
+            "ok": true
+        },
+        {
+            "id": "cv03",
+            "expected": "ready",
+            "native_s": 0.01,
+            "ocr_s": 1.41,
+            "missing_in_ocr": 0.0,
+            "status": "ready",
+            "ok": true
+        },
+        {
+            "id": "cv04",
+            "expected": "ready",
+            "native_s": 0.01,
+            "ocr_s": 2.7,
+            "missing_in_ocr": 0.02,
+            "status": "ready",
+            "ok": true
+        },
+        {
+            "id": "cv05",
+            "expected": "ready",
+            "native_s": 0.01,
+            "ocr_s": 1.29,
+            "missing_in_ocr": 0.0,
+            "status": "ready",
+            "ok": true
+        },
+        {
+            "id": "cv06",
+            "expected": "ready",
+            "native_s": 0.01,
+            "ocr_s": 2.21,
+            "missing_in_ocr": 0.0,
+            "status": "ready",
+            "ok": true
+        },
+        {
+            "id": "cv07",
+            "expected": "ready",
+            "native_s": 0.01,
+            "ocr_s": 0.79,
+            "missing_in_ocr": 0.0,
+            "status": "ready",
+            "ok": true
+        },
+        {
+            "id": "cv08",
+            "expected": "ready",
+            "native_s": 0.0,
+            "ocr_s": 0.75,
+            "missing_in_ocr": 1.0,
+            "status": "ready",
+            "ok": true
+        },
+        {
+            "id": "cv09",
+            "expected": "failed_unreadable",
+            "status": "failed_unreadable",
+            "error": "PdfStreamError",
+            "ok": true
+        },
+        {
+            "id": "cv10",
+            "expected": "needs_clarification",
+            "native_s": 0.01,
+            "ocr_s": 1.08,
+            "missing_in_ocr": 0.25,
+            "status": "needs_clarification",
+            "ok": true
+        }
+    ],
+    "totals": {
+        "name": [8, 8, 8],
+        "email": [8, 8, 8],
+        "skills": [56, 56, 56],
+        "experience": [11, 11, 11]
+    },
+    "clamav": "22.8s, 1003 MB peak, infected lines: 0"
 }

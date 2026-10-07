@@ -1,452 +1,372 @@
 [
- {
-  "id": "fr01",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "Which HTML element best represents a block of site navigation links?",
-  "options": [
-   "<div>",
-   "<nav>",
-   "<section>",
-   "<span>"
-  ],
-  "answer_index": 1,
-  "explanation": "<nav> is the semantic element for navigation."
- },
- {
-  "id": "fr02",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "Which CSS declaration makes an element a flex container?",
-  "options": [
-   "display: flex",
-   "position: flex",
-   "float: flex",
-   "flex: container"
-  ],
-  "answer_index": 0,
-  "explanation": "display: flex enables flexbox layout."
- },
- {
-  "id": "fr03",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "What does useEffect(fn, []) do in React?",
-  "options": [
-   "Runs fn on every render",
-   "Runs fn once after the first render",
-   "Never runs fn",
-   "Runs fn before rendering"
-  ],
-  "answer_index": 1,
-  "explanation": "An empty dependency array runs the effect once after mount."
- },
- {
-  "id": "fr04",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "Which React hook adds local state to a function component?",
-  "options": [
-   "useRef",
-   "useMemo",
-   "useState",
-   "useContext"
-  ],
-  "answer_index": 2,
-  "explanation": "useState returns a state value and a setter."
- },
- {
-  "id": "fr05",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "How does === differ from == in JavaScript?",
-  "options": [
-   "=== compares without type coercion",
-   "=== is slower and deprecated",
-   "== compares object identity only",
-   "They are identical"
-  ],
-  "answer_index": 0,
-  "explanation": "=== requires equal type and value."
- },
- {
-  "id": "fr06",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "What does aria-label provide?",
-  "options": [
-   "A visual tooltip style",
-   "An accessible name for assistive technology",
-   "A CSS class",
-   "A keyboard shortcut"
-  ],
-  "answer_index": 1,
-  "explanation": "aria-label gives an element an accessible name."
- },
- {
-  "id": "fr07",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "Which CSS unit is relative to the root element's font size?",
-  "options": [
-   "em",
-   "px",
-   "rem",
-   "vh"
-  ],
-  "answer_index": 2,
-  "explanation": "rem is relative to the root font size."
- },
- {
-  "id": "fr08",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "Which array method adds an item to the end?",
-  "options": [
-   "shift",
-   "pop",
-   "unshift",
-   "push"
-  ],
-  "answer_index": 3,
-  "explanation": "push appends to the end."
- },
- {
-  "id": "fr09",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "In TypeScript, what does an interface mainly describe?",
-  "options": [
-   "The shape of an object",
-   "A runtime class instance",
-   "A CSS module",
-   "A network request"
-  ],
-  "answer_index": 0,
-  "explanation": "Interfaces describe object shapes at compile time."
- },
- {
-  "id": "fr10",
-  "bank": "practice",
-  "role": "frontend",
-  "version": 1,
-  "question": "Why give a stable key prop to items in a React list?",
-  "options": [
-   "To style the items",
-   "To let React identify items between renders",
-   "To make items clickable",
-   "To sort the items"
-  ],
-  "answer_index": 1,
-  "explanation": "Keys let React match items across renders."
- },
- {
-  "id": "ba01",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "Which HTTP status code means a resource was created?",
-  "options": [
-   "200",
-   "204",
-   "201",
-   "301"
-  ],
-  "answer_index": 2,
-  "explanation": "201 Created."
- },
- {
-  "id": "ba02",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "Which SQL clause filters groups after aggregation?",
-  "options": [
-   "WHERE",
-   "HAVING",
-   "ORDER BY",
-   "LIMIT"
-  ],
-  "answer_index": 1,
-  "explanation": "HAVING filters aggregated groups."
- },
- {
-  "id": "ba03",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "What is the most effective defence against SQL injection?",
-  "options": [
-   "Parameterized queries",
-   "Hiding the database port",
-   "Longer passwords",
-   "Client-side validation"
-  ],
-  "answer_index": 0,
-  "explanation": "Parameterized queries keep input as data."
- },
- {
-  "id": "ba04",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "Which HTTP method is defined as idempotent?",
-  "options": [
-   "POST",
-   "PUT",
-   "PATCH always",
-   "None"
-  ],
-  "answer_index": 1,
-  "explanation": "Repeating PUT has the same effect."
- },
- {
-  "id": "ba05",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "What does a database index mainly do?",
-  "options": [
-   "Encrypts a column",
-   "Speeds lookups at some write cost",
-   "Removes duplicates",
-   "Backs up the table"
-  ],
-  "answer_index": 1,
-  "explanation": "Indexes speed reads and add write overhead."
- },
- {
-  "id": "ba06",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "Which HTTP method should retrieve data without side effects?",
-  "options": [
-   "GET",
-   "POST",
-   "DELETE",
-   "PUT"
-  ],
-  "answer_index": 0,
-  "explanation": "GET is safe and read-only."
- },
- {
-  "id": "ba07",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "In ACID, what does the A stand for?",
-  "options": [
-   "Availability",
-   "Authorization",
-   "Atomicity",
-   "Access"
-  ],
-  "answer_index": 2,
-  "explanation": "Atomicity: all or nothing."
- },
- {
-  "id": "ba08",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "What does a foreign key enforce?",
-  "options": [
-   "Unique rows",
-   "Referential integrity",
-   "Faster joins always",
-   "Encryption"
-  ],
-  "answer_index": 1,
-  "explanation": "It ensures referenced rows exist."
- },
- {
-  "id": "ba09",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "Why use a job queue for slow work?",
-  "options": [
-   "To keep slow work out of the request",
-   "To skip validation",
-   "To avoid a database",
-   "To cache pages"
-  ],
-  "answer_index": 0,
-  "explanation": "Queues defer slow work from the web request."
- },
- {
-  "id": "ba10",
-  "bank": "practice",
-  "role": "backend",
-  "version": 1,
-  "question": "Which status fits an authenticated user who lacks permission?",
-  "options": [
-   "401",
-   "403",
-   "404",
-   "500"
-  ],
-  "answer_index": 1,
-  "explanation": "403 Forbidden; 401 means unauthenticated."
- },
- {
-  "id": "da01",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "Which measure of centre is least affected by outliers?",
-  "options": [
-   "Mean",
-   "Median",
-   "Range",
-   "Variance"
-  ],
-  "answer_index": 1,
-  "explanation": "The median resists outliers."
- },
- {
-  "id": "da02",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "Which join keeps all rows from the left table?",
-  "options": [
-   "INNER JOIN",
-   "RIGHT JOIN",
-   "LEFT JOIN",
-   "CROSS JOIN"
-  ],
-  "answer_index": 2,
-  "explanation": "LEFT JOIN keeps all left rows."
- },
- {
-  "id": "da03",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "Which pandas method summarizes numeric columns?",
-  "options": [
-   "describe()",
-   "head()",
-   "info() only",
-   "shape"
-  ],
-  "answer_index": 0,
-  "explanation": "describe() gives count, mean, std and quartiles."
- },
- {
-  "id": "da04",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "What does a p-value represent?",
-  "options": [
-   "Probability the null is true",
-   "Probability of data at least this extreme if the null is true",
-   "Effect size",
-   "Sample size"
-  ],
-  "answer_index": 1,
-  "explanation": "It assumes the null hypothesis."
- },
- {
-  "id": "da05",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "Which chart best shows the relationship between two numeric variables?",
-  "options": [
-   "Pie chart",
-   "Scatter plot",
-   "Stacked bar",
-   "Donut"
-  ],
-  "answer_index": 1,
-  "explanation": "Scatter plots show relationships."
- },
- {
-  "id": "da06",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "What is overfitting?",
-  "options": [
-   "Model fits training noise and generalizes poorly",
-   "Model is too simple",
-   "Data is too large",
-   "Training is too fast"
-  ],
-  "answer_index": 0,
-  "explanation": "Overfit models fail on new data."
- },
- {
-  "id": "da07",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "What does df.dropna() do by default?",
-  "options": [
-   "Fills missing values",
-   "Removes rows with missing values",
-   "Drops columns",
-   "Sorts data"
-  ],
-  "answer_index": 1,
-  "explanation": "Rows with NaN are removed."
- },
- {
-  "id": "da08",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "Correlation does not imply what?",
-  "options": [
-   "Association",
-   "Causation",
-   "Direction",
-   "Linearity"
-  ],
-  "answer_index": 1,
-  "explanation": "Correlation alone does not show causation."
- },
- {
-  "id": "da09",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "Which metric is better than accuracy for imbalanced classes?",
-  "options": [
-   "F1 score",
-   "Row count",
-   "Mean",
-   "R-squared"
-  ],
-  "answer_index": 0,
-  "explanation": "F1 balances precision and recall."
- },
- {
-  "id": "da10",
-  "bank": "practice",
-  "role": "data",
-  "version": 1,
-  "question": "What does GROUP BY do in SQL?",
-  "options": [
-   "Sorts rows",
-   "Aggregates rows sharing values",
-   "Deletes duplicates",
-   "Joins tables"
-  ],
-  "answer_index": 1,
-  "explanation": "It groups rows for aggregates."
- }
+    {
+        "id": "fr01",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "Which HTML element best represents a block of site navigation links?",
+        "options": ["<div>", "<nav>", "<section>", "<span>"],
+        "answer_index": 1,
+        "explanation": "<nav> is the semantic element for navigation."
+    },
+    {
+        "id": "fr02",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "Which CSS declaration makes an element a flex container?",
+        "options": [
+            "display: flex",
+            "position: flex",
+            "float: flex",
+            "flex: container"
+        ],
+        "answer_index": 0,
+        "explanation": "display: flex enables flexbox layout."
+    },
+    {
+        "id": "fr03",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "What does useEffect(fn, []) do in React?",
+        "options": [
+            "Runs fn on every render",
+            "Runs fn once after the first render",
+            "Never runs fn",
+            "Runs fn before rendering"
+        ],
+        "answer_index": 1,
+        "explanation": "An empty dependency array runs the effect once after mount."
+    },
+    {
+        "id": "fr04",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "Which React hook adds local state to a function component?",
+        "options": ["useRef", "useMemo", "useState", "useContext"],
+        "answer_index": 2,
+        "explanation": "useState returns a state value and a setter."
+    },
+    {
+        "id": "fr05",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "How does === differ from == in JavaScript?",
+        "options": [
+            "=== compares without type coercion",
+            "=== is slower and deprecated",
+            "== compares object identity only",
+            "They are identical"
+        ],
+        "answer_index": 0,
+        "explanation": "=== requires equal type and value."
+    },
+    {
+        "id": "fr06",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "What does aria-label provide?",
+        "options": [
+            "A visual tooltip style",
+            "An accessible name for assistive technology",
+            "A CSS class",
+            "A keyboard shortcut"
+        ],
+        "answer_index": 1,
+        "explanation": "aria-label gives an element an accessible name."
+    },
+    {
+        "id": "fr07",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "Which CSS unit is relative to the root element's font size?",
+        "options": ["em", "px", "rem", "vh"],
+        "answer_index": 2,
+        "explanation": "rem is relative to the root font size."
+    },
+    {
+        "id": "fr08",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "Which array method adds an item to the end?",
+        "options": ["shift", "pop", "unshift", "push"],
+        "answer_index": 3,
+        "explanation": "push appends to the end."
+    },
+    {
+        "id": "fr09",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "In TypeScript, what does an interface mainly describe?",
+        "options": [
+            "The shape of an object",
+            "A runtime class instance",
+            "A CSS module",
+            "A network request"
+        ],
+        "answer_index": 0,
+        "explanation": "Interfaces describe object shapes at compile time."
+    },
+    {
+        "id": "fr10",
+        "bank": "practice",
+        "role": "frontend",
+        "version": 1,
+        "question": "Why give a stable key prop to items in a React list?",
+        "options": [
+            "To style the items",
+            "To let React identify items between renders",
+            "To make items clickable",
+            "To sort the items"
+        ],
+        "answer_index": 1,
+        "explanation": "Keys let React match items across renders."
+    },
+    {
+        "id": "ba01",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "Which HTTP status code means a resource was created?",
+        "options": ["200", "204", "201", "301"],
+        "answer_index": 2,
+        "explanation": "201 Created."
+    },
+    {
+        "id": "ba02",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "Which SQL clause filters groups after aggregation?",
+        "options": ["WHERE", "HAVING", "ORDER BY", "LIMIT"],
+        "answer_index": 1,
+        "explanation": "HAVING filters aggregated groups."
+    },
+    {
+        "id": "ba03",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "What is the most effective defence against SQL injection?",
+        "options": [
+            "Parameterized queries",
+            "Hiding the database port",
+            "Longer passwords",
+            "Client-side validation"
+        ],
+        "answer_index": 0,
+        "explanation": "Parameterized queries keep input as data."
+    },
+    {
+        "id": "ba04",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "Which HTTP method is defined as idempotent?",
+        "options": ["POST", "PUT", "PATCH always", "None"],
+        "answer_index": 1,
+        "explanation": "Repeating PUT has the same effect."
+    },
+    {
+        "id": "ba05",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "What does a database index mainly do?",
+        "options": [
+            "Encrypts a column",
+            "Speeds lookups at some write cost",
+            "Removes duplicates",
+            "Backs up the table"
+        ],
+        "answer_index": 1,
+        "explanation": "Indexes speed reads and add write overhead."
+    },
+    {
+        "id": "ba06",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "Which HTTP method should retrieve data without side effects?",
+        "options": ["GET", "POST", "DELETE", "PUT"],
+        "answer_index": 0,
+        "explanation": "GET is safe and read-only."
+    },
+    {
+        "id": "ba07",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "In ACID, what does the A stand for?",
+        "options": ["Availability", "Authorization", "Atomicity", "Access"],
+        "answer_index": 2,
+        "explanation": "Atomicity: all or nothing."
+    },
+    {
+        "id": "ba08",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "What does a foreign key enforce?",
+        "options": [
+            "Unique rows",
+            "Referential integrity",
+            "Faster joins always",
+            "Encryption"
+        ],
+        "answer_index": 1,
+        "explanation": "It ensures referenced rows exist."
+    },
+    {
+        "id": "ba09",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "Why use a job queue for slow work?",
+        "options": [
+            "To keep slow work out of the request",
+            "To skip validation",
+            "To avoid a database",
+            "To cache pages"
+        ],
+        "answer_index": 0,
+        "explanation": "Queues defer slow work from the web request."
+    },
+    {
+        "id": "ba10",
+        "bank": "practice",
+        "role": "backend",
+        "version": 1,
+        "question": "Which status fits an authenticated user who lacks permission?",
+        "options": ["401", "403", "404", "500"],
+        "answer_index": 1,
+        "explanation": "403 Forbidden; 401 means unauthenticated."
+    },
+    {
+        "id": "da01",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "Which measure of centre is least affected by outliers?",
+        "options": ["Mean", "Median", "Range", "Variance"],
+        "answer_index": 1,
+        "explanation": "The median resists outliers."
+    },
+    {
+        "id": "da02",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "Which join keeps all rows from the left table?",
+        "options": ["INNER JOIN", "RIGHT JOIN", "LEFT JOIN", "CROSS JOIN"],
+        "answer_index": 2,
+        "explanation": "LEFT JOIN keeps all left rows."
+    },
+    {
+        "id": "da03",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "Which pandas method summarizes numeric columns?",
+        "options": ["describe()", "head()", "info() only", "shape"],
+        "answer_index": 0,
+        "explanation": "describe() gives count, mean, std and quartiles."
+    },
+    {
+        "id": "da04",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "What does a p-value represent?",
+        "options": [
+            "Probability the null is true",
+            "Probability of data at least this extreme if the null is true",
+            "Effect size",
+            "Sample size"
+        ],
+        "answer_index": 1,
+        "explanation": "It assumes the null hypothesis."
+    },
+    {
+        "id": "da05",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "Which chart best shows the relationship between two numeric variables?",
+        "options": ["Pie chart", "Scatter plot", "Stacked bar", "Donut"],
+        "answer_index": 1,
+        "explanation": "Scatter plots show relationships."
+    },
+    {
+        "id": "da06",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "What is overfitting?",
+        "options": [
+            "Model fits training noise and generalizes poorly",
+            "Model is too simple",
+            "Data is too large",
+            "Training is too fast"
+        ],
+        "answer_index": 0,
+        "explanation": "Overfit models fail on new data."
+    },
+    {
+        "id": "da07",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "What does df.dropna() do by default?",
+        "options": [
+            "Fills missing values",
+            "Removes rows with missing values",
+            "Drops columns",
+            "Sorts data"
+        ],
+        "answer_index": 1,
+        "explanation": "Rows with NaN are removed."
+    },
+    {
+        "id": "da08",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "Correlation does not imply what?",
+        "options": ["Association", "Causation", "Direction", "Linearity"],
+        "answer_index": 1,
+        "explanation": "Correlation alone does not show causation."
+    },
+    {
+        "id": "da09",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "Which metric is better than accuracy for imbalanced classes?",
+        "options": ["F1 score", "Row count", "Mean", "R-squared"],
+        "answer_index": 0,
+        "explanation": "F1 balances precision and recall."
+    },
+    {
+        "id": "da10",
+        "bank": "practice",
+        "role": "data",
+        "version": 1,
+        "question": "What does GROUP BY do in SQL?",
+        "options": [
+            "Sorts rows",
+            "Aggregates rows sharing values",
+            "Deletes duplicates",
+            "Joins tables"
+        ],
+        "answer_index": 1,
+        "explanation": "It groups rows for aggregates."
+    }
 ]
