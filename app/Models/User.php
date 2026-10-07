@@ -32,7 +32,12 @@ class User extends Authenticatable implements PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
-public function memberships() { return $this->hasMany(Membership::class); }
+
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

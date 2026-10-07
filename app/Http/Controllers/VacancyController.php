@@ -45,6 +45,7 @@ class VacancyController extends Controller
         $vacancy = DB::transaction(function () use ($organization, $data) {
             $v = $organization->vacancies()->create(['job_family_id' => $data['job_family_id']]);
             $this->addVersion($v, $data);
+
             return $v;
         });
 
@@ -55,6 +56,7 @@ class VacancyController extends Controller
     {
         Gate::authorize('manage', $vacancy);
         $this->addVersion($vacancy, $request->validate($this->rules()));
+
         return response()->json($vacancy->load('versions'));
     }
 
@@ -64,6 +66,7 @@ class VacancyController extends Controller
         $vacancy->versions()->where('version', $vacancy->current_version)
             ->update(['published_at' => now()]);
         $vacancy->update(['status' => 'open']);
+
         return response()->json($vacancy->fresh());
     }
 }

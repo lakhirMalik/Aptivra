@@ -15,6 +15,7 @@ class OrganizationController extends Controller
         $organization = DB::transaction(function () use ($request, $data) {
             $org = Organization::create(['name' => $data['name']]);
             $org->memberships()->create(['user_id' => $request->user()->id, 'role' => 'owner']);
+
             return $org;
         });
 
@@ -25,6 +26,7 @@ class OrganizationController extends Controller
     {
         abort_unless($request->user()->is_admin, 403);
         $organization->update(['status' => 'approved']);
+
         return response()->json($organization);
     }
 }

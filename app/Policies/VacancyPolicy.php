@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Vacancy;
-use Illuminate\Auth\Access\Response;
 
 class VacancyPolicy
 {
@@ -63,11 +62,12 @@ class VacancyPolicy
     {
         return false;
     }
+
     public function manage(User $user, Vacancy $vacancy): bool
     {
-    return $user->memberships()
-        ->where('organization_id', $vacancy->organization_id)
-        ->whereIn('role', ['owner', 'recruiter'])
-        ->exists();
+        return $user->memberships()
+            ->where('organization_id', $vacancy->organization_id)
+            ->whereIn('role', ['owner', 'recruiter'])
+            ->exists();
     }
 }
