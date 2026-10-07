@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use App\Models\Vacancy;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class VacancyController extends Controller
 {
+    /** @return array<string, mixed> */
     private function rules(): array
     {
         return [
@@ -21,6 +23,7 @@ class VacancyController extends Controller
         ];
     }
 
+    /** @param array<string, mixed> $data */
     private function addVersion(Vacancy $vacancy, array $data): void
     {
         $n = $vacancy->current_version + 1;
@@ -33,7 +36,7 @@ class VacancyController extends Controller
         $vacancy->update(['current_version' => $n]);
     }
 
-    public function store(Request $request, Organization $organization)
+    public function store(Request $request, Organization $organization): JsonResponse
     {
         $isStaff = $request->user()->memberships()
             ->where('organization_id', $organization->id)
@@ -52,7 +55,7 @@ class VacancyController extends Controller
         return response()->json($vacancy->load('versions'), 201);
     }
 
-    public function update(Request $request, Vacancy $vacancy)
+    public function update(Request $request, Vacancy $vacancy): JsonResponse
     {
         Gate::authorize('manage', $vacancy);
         $this->addVersion($vacancy, $request->validate($this->rules()));
@@ -60,7 +63,7 @@ class VacancyController extends Controller
         return response()->json($vacancy->load('versions'));
     }
 
-    public function publish(Vacancy $vacancy)
+    public function publish(Vacancy $vacancy): JsonResponse
     {
         Gate::authorize('manage', $vacancy);
         $vacancy->versions()->where('version', $vacancy->current_version)
