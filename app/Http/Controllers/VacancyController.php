@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobFamily;
 use App\Models\Organization;
 use App\Models\Vacancy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class VacancyController extends Controller
 {
@@ -71,5 +74,27 @@ class VacancyController extends Controller
         $vacancy->update(['status' => 'open']);
 
         return response()->json($vacancy->fresh());
+    }
+
+    public function index(Request $request, Organization $organization): Response
+    {
+        abort_unless(
+            $request->user()->memberships()->where('organization_id', $organization->id)->exists(),
+            403
+        );
+
+        $vacancies = $organization->vacancies()->with('versions')->get()->map(
+            fn (Vacancy $v): array => [
+                'id' => $v->id,
+                'status' => $v->status,
+                'title' => $v->versions->firstWhere('version', $v->current_version)?->title,
+            ]
+        );
+
+        return Inertia::render('vacancies', [
+            'organization' => $organization->only(['id', 'name', 'status']),
+            'jobFamilies' => JobFamily::query()->get(['id', 'name']),
+            'vacancies' => $vacancies,
+        ]);
     }
 }

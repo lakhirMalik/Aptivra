@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\VacancyController;
+use App\Http\Controllers\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
@@ -18,6 +19,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('organizations/{organization}/vacancies', [VacancyController::class, 'store']);
     Route::put('vacancies/{vacancy}', [VacancyController::class, 'update']);
     Route::post('vacancies/{vacancy}/publish', [VacancyController::class, 'publish']);
+    Route::get('workspace', [WorkspaceController::class, 'index']);
+    Route::get('organizations/{organization}/vacancies', [VacancyController::class, 'index']);
 });
 
 require __DIR__.'/settings.php';
