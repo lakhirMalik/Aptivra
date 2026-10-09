@@ -256,3 +256,10 @@ export default function Vacancies({
         </div>
     );
 }
+
+Vacancies.layout = {
+    breadcrumbs: [
+        { title: 'Employer workspace', href: '/workspace' },
+        { title: 'Vacancies', href: '/workspace' },
+    ],
+};
