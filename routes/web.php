@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\VacancyController;
 use App\Http\Controllers\WorkspaceController;
@@ -11,7 +12,7 @@ Route::inertia('/prototype/candidate', 'prototype/candidate');
 Route::inertia('/prototype/employer', 'prototype/employer');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 
     Route::post('organizations', [OrganizationController::class, 'store']);
     Route::post('organizations/{organization}/approve', [OrganizationController::class, 'approve']);
