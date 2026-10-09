@@ -2,7 +2,7 @@ import { Head, router } from '@inertiajs/react';
 import { PageHeader } from '@/components/page-header';
 import { Plus, X } from 'lucide-react';
 import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
+import { StatusBadge } from '@/components/status-badge';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -138,7 +138,10 @@ export default function Vacancies({
                         <div className="space-y-2">
                             <Label>Requirements</Label>
                             {criteria.map((c, i) => (
-                                <div key={i} className="flex gap-2">
+                                <div
+                                    key={i}
+                                    className="flex flex-wrap gap-2 sm:flex-nowrap"
+                                >
                                     <Input
                                         value={c.text}
                                         onChange={(e) =>
@@ -225,18 +228,10 @@ export default function Vacancies({
                                     <p className="truncate font-medium">
                                         {v.title}
                                     </p>
-                                    <Badge
-                                        variant={
-                                            v.status === 'open'
-                                                ? 'default'
-                                                : 'secondary'
-                                        }
+                                    <StatusBadge
+                                        status={v.status}
                                         className="mt-1"
-                                    >
-                                        {v.status === 'open'
-                                            ? 'Published'
-                                            : 'Draft'}
-                                    </Badge>
+                                    />
                                 </div>
                                 {v.status === 'draft' && (
                                     <Button
