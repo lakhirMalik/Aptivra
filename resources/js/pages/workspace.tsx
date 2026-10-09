@@ -1,6 +1,14 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { send } from '@/lib/api';
 
@@ -30,79 +38,107 @@ export default function Workspace({
     }
 
     return (
-        <div className="mx-auto max-w-2xl space-y-8 p-6">
+        <div className="mx-auto max-w-3xl space-y-6 p-6">
             <Head title="Workspace" />
             <h1 className="text-2xl font-semibold">Employer workspace</h1>
 
-            <section className="space-y-2">
-                <h2 className="font-medium">Create a workspace</h2>
-                <div className="flex gap-2">
-                    <Input
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Company name"
-                    />
-                    <Button onClick={() => run('/organizations', { name })}>
-                        Create
-                    </Button>
-                </div>
-                {error && <p className="text-sm text-red-600">{error}</p>}
-            </section>
-
-            <section className="space-y-2">
-                <h2 className="font-medium">My workspaces</h2>
-                {organizations.length === 0 && (
-                    <p className="text-sm">None yet.</p>
-                )}
-                {organizations.map((o) => (
-                    <div
-                        key={o.id}
-                        className="flex items-center justify-between rounded border p-3"
-                    >
-                        <span>
-                            {o.name}{' '}
-                            <span className="text-sm opacity-70">
-                                ({o.status})
-                            </span>
-                        </span>
-                        {o.status === 'approved' ? (
-                            <Link
-                                href={`/organizations/${o.id}/vacancies`}
-                                className="underline"
-                            >
-                                Vacancies
-                            </Link>
-                        ) : (
-                            <span className="text-sm opacity-70">
-                                Waiting for approval
-                            </span>
-                        )}
+            <Card>
+                <CardHeader>
+                    <CardTitle>Create a workspace</CardTitle>
+                    <CardDescription>
+                        New workspaces are reviewed before you can publish
+                        vacancies.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                    <div className="flex gap-2">
+                        <Input
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Company name"
+                        />
+                        <Button onClick={() => run('/organizations', { name })}>
+                            Create
+                        </Button>
                     </div>
-                ))}
-            </section>
-
-            {isAdmin && (
-                <section className="space-y-2">
-                    <h2 className="font-medium">Pending approvals</h2>
-                    {pending.length === 0 && (
-                        <p className="text-sm">Nothing pending.</p>
+                    {error && (
+                        <p className="text-sm text-destructive">{error}</p>
                     )}
-                    {pending.map((o) => (
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>My workspaces</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                    {organizations.length === 0 && (
+                        <p className="text-sm text-muted-foreground">
+                            No workspaces yet.
+                        </p>
+                    )}
+                    {organizations.map((o) => (
                         <div
                             key={o.id}
-                            className="flex items-center justify-between rounded border p-3"
+                            className="flex items-center justify-between rounded-lg border p-3"
                         >
-                            <span>{o.name}</span>
-                            <Button
-                                onClick={() =>
-                                    run(`/organizations/${o.id}/approve`)
-                                }
-                            >
-                                Approve
-                            </Button>
+                            <div className="flex items-center gap-2">
+                                <span className="font-medium">{o.name}</span>
+                                <Badge
+                                    variant={
+                                        o.status === 'approved'
+                                            ? 'default'
+                                            : 'secondary'
+                                    }
+                                >
+                                    {o.status === 'approved'
+                                        ? 'Approved'
+                                        : 'Waiting for approval'}
+                                </Badge>
+                            </div>
+                            {o.status === 'approved' && (
+                                <Button asChild size="sm" variant="outline">
+                                    <Link
+                                        href={`/organizations/${o.id}/vacancies`}
+                                    >
+                                        Vacancies
+                                    </Link>
+                                </Button>
+                            )}
                         </div>
                     ))}
-                </section>
+                </CardContent>
+            </Card>
+
+            {isAdmin && (
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Pending approvals</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                        {pending.length === 0 && (
+                            <p className="text-sm text-muted-foreground">
+                                Nothing pending.
+                            </p>
+                        )}
+                        {pending.map((o) => (
+                            <div
+                                key={o.id}
+                                className="flex items-center justify-between rounded-lg border p-3"
+                            >
+                                <span className="font-medium">{o.name}</span>
+                                <Button
+                                    size="sm"
+                                    onClick={() =>
+                                        run(`/organizations/${o.id}/approve`)
+                                    }
+                                >
+                                    Approve
+                                </Button>
+                            </div>
+                        ))}
+                    </CardContent>
+                </Card>
             )}
         </div>
     );

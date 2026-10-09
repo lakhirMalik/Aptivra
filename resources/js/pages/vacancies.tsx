@@ -1,11 +1,31 @@
 import { Head, router } from '@inertiajs/react';
+import { Plus, X } from 'lucide-react';
 import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { send } from '@/lib/api';
 
 type Criterion = { text: string; type: 'required' | 'preferred' };
 type Vacancy = { id: number; status: string; title: string | null };
+
+const emptyCriterion = (): Criterion => ({ text: '', type: 'required' });
 
 export default function Vacancies({
     organization,
@@ -18,10 +38,10 @@ export default function Vacancies({
 }) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [jobFamilyId, setJobFamilyId] = useState(jobFamilies[0]?.id ?? 0);
-    const [criteria, setCriteria] = useState<Criterion[]>([
-        { text: '', type: 'required' },
-    ]);
+    const [jobFamilyId, setJobFamilyId] = useState(
+        String(jobFamilies[0]?.id ?? ''),
+    );
+    const [criteria, setCriteria] = useState<Criterion[]>([emptyCriterion()]);
     const [error, setError] = useState('');
 
     function setCriterion(i: number, change: Partial<Criterion>) {
@@ -43,128 +63,202 @@ export default function Vacancies({
     const create = () =>
         run(async () => {
             await send(`/organizations/${organization.id}/vacancies`, 'POST', {
-                job_family_id: jobFamilyId,
+                job_family_id: Number(jobFamilyId),
                 title,
                 description,
                 criteria,
             });
             setTitle('');
             setDescription('');
-            setCriteria([{ text: '', type: 'required' }]);
+            setCriteria([emptyCriterion()]);
         });
 
     return (
-        <div className="mx-auto max-w-2xl space-y-8 p-6">
+        <div className="mx-auto max-w-6xl space-y-6 p-6">
             <Head title="Vacancies" />
-            <h1 className="text-2xl font-semibold">
-                {organization.name}: vacancies
-            </h1>
+            <div>
+                <h1 className="text-2xl font-semibold">{organization.name}</h1>
+                <p className="text-sm text-muted-foreground">
+                    Create vacancies and publish them when ready.
+                </p>
+            </div>
 
-            <section className="space-y-3">
-                <h2 className="font-medium">New vacancy</h2>
-                <Input
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Title"
-                />
-                <textarea
-                    className="w-full rounded border p-2"
-                    rows={4}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Description"
-                />
-                <select
-                    className="w-full rounded border p-2"
-                    value={jobFamilyId}
-                    onChange={(e) => setJobFamilyId(Number(e.target.value))}
-                >
-                    {jobFamilies.map((f) => (
-                        <option key={f.id} value={f.id}>
-                            {f.name}
-                        </option>
-                    ))}
-                </select>
+            <div className="grid gap-6 lg:grid-cols-5">
+                <Card className="lg:col-span-3">
+                    <CardHeader>
+                        <CardTitle>New vacancy</CardTitle>
+                        <CardDescription>
+                            Each save creates a new version of the requirements.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-5">
+                        <div className="space-y-2">
+                            <Label htmlFor="title">Title</Label>
+                            <Input
+                                id="title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Junior React Developer"
+                            />
+                        </div>
 
-                {criteria.map((c, i) => (
-                    <div key={i} className="flex gap-2">
-                        <Input
-                            value={c.text}
-                            onChange={(e) =>
-                                setCriterion(i, { text: e.target.value })
-                            }
-                            placeholder="Requirement"
-                        />
-                        <select
-                            className="rounded border p-2"
-                            value={c.type}
-                            onChange={(e) =>
-                                setCriterion(i, {
-                                    type: e.target.value as Criterion['type'],
-                                })
-                            }
-                        >
-                            <option value="required">Required</option>
-                            <option value="preferred">Preferred</option>
-                        </select>
-                        <Button
-                            variant="outline"
-                            onClick={() =>
-                                setCriteria(criteria.filter((_, n) => n !== i))
-                            }
-                        >
-                            Remove
-                        </Button>
-                    </div>
-                ))}
-                <div className="flex gap-2">
-                    <Button
-                        variant="outline"
-                        onClick={() =>
-                            setCriteria([
-                                ...criteria,
-                                { text: '', type: 'required' },
-                            ])
-                        }
-                    >
-                        Add requirement
-                    </Button>
-                    <Button onClick={create}>Save as draft</Button>
-                </div>
-                {error && <p className="text-sm text-red-600">{error}</p>}
-            </section>
+                        <div className="space-y-2">
+                            <Label htmlFor="description">Description</Label>
+                            <textarea
+                                id="description"
+                                rows={4}
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                placeholder="What will this person work on?"
+                                className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                            />
+                        </div>
 
-            <section className="space-y-2">
-                <h2 className="font-medium">Vacancies</h2>
-                {vacancies.length === 0 && <p className="text-sm">None yet.</p>}
-                {vacancies.map((v) => (
-                    <div
-                        key={v.id}
-                        className="flex items-center justify-between rounded border p-3"
-                    >
-                        <span>
-                            {v.title}{' '}
-                            <span className="text-sm opacity-70">
-                                ({v.status})
-                            </span>
-                        </span>
-                        {v.status === 'draft' && (
+                        <div className="space-y-2">
+                            <Label>Job family</Label>
+                            <Select
+                                value={jobFamilyId}
+                                onValueChange={setJobFamilyId}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {jobFamilies.map((f) => (
+                                        <SelectItem
+                                            key={f.id}
+                                            value={String(f.id)}
+                                        >
+                                            {f.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label>Requirements</Label>
+                            {criteria.map((c, i) => (
+                                <div key={i} className="flex gap-2">
+                                    <Input
+                                        value={c.text}
+                                        onChange={(e) =>
+                                            setCriterion(i, {
+                                                text: e.target.value,
+                                            })
+                                        }
+                                        placeholder="e.g. React and TypeScript"
+                                    />
+                                    <Select
+                                        value={c.type}
+                                        onValueChange={(v) =>
+                                            setCriterion(i, {
+                                                type: v as Criterion['type'],
+                                            })
+                                        }
+                                    >
+                                        <SelectTrigger className="w-36 shrink-0">
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="required">
+                                                Required
+                                            </SelectItem>
+                                            <SelectItem value="preferred">
+                                                Preferred
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        disabled={criteria.length === 1}
+                                        onClick={() =>
+                                            setCriteria(
+                                                criteria.filter(
+                                                    (_, n) => n !== i,
+                                                ),
+                                            )
+                                        }
+                                    >
+                                        <X className="size-4" />
+                                    </Button>
+                                </div>
+                            ))}
                             <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
                                 onClick={() =>
-                                    run(() =>
-                                        send(
-                                            `/vacancies/${v.id}/publish`,
-                                            'POST',
-                                        ),
-                                    )
+                                    setCriteria([...criteria, emptyCriterion()])
                                 }
                             >
-                                Publish
+                                <Plus className="size-4" /> Add requirement
                             </Button>
+                        </div>
+
+                        {error && (
+                            <p className="text-sm text-destructive">{error}</p>
                         )}
-                    </div>
-                ))}
-            </section>
+                    </CardContent>
+                    <CardFooter>
+                        <Button onClick={create}>Save as draft</Button>
+                    </CardFooter>
+                </Card>
+
+                <Card className="h-fit lg:col-span-2">
+                    <CardHeader>
+                        <CardTitle>Vacancies</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                        {vacancies.length === 0 && (
+                            <p className="text-sm text-muted-foreground">
+                                No vacancies yet.
+                            </p>
+                        )}
+                        {vacancies.map((v) => (
+                            <div
+                                key={v.id}
+                                className="flex items-center justify-between gap-3 rounded-lg border p-3"
+                            >
+                                <div className="min-w-0">
+                                    <p className="truncate font-medium">
+                                        {v.title}
+                                    </p>
+                                    <Badge
+                                        variant={
+                                            v.status === 'open'
+                                                ? 'default'
+                                                : 'secondary'
+                                        }
+                                        className="mt-1"
+                                    >
+                                        {v.status === 'open'
+                                            ? 'Published'
+                                            : 'Draft'}
+                                    </Badge>
+                                </div>
+                                {v.status === 'draft' && (
+                                    <Button
+                                        size="sm"
+                                        onClick={() =>
+                                            run(() =>
+                                                send(
+                                                    `/vacancies/${v.id}/publish`,
+                                                    'POST',
+                                                ),
+                                            )
+                                        }
+                                    >
+                                        Publish
+                                    </Button>
+                                )}
+                            </div>
+                        ))}
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 }
