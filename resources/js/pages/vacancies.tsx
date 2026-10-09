@@ -1,4 +1,5 @@
 import { Head, router } from '@inertiajs/react';
+import { PageHeader } from '@/components/page-header';
 import { Plus, X } from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
@@ -74,14 +75,12 @@ export default function Vacancies({
         });
 
     return (
-        <div className="mx-auto max-w-6xl space-y-6 p-6">
+        <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 p-4 md:p-6">
             <Head title="Vacancies" />
-            <div>
-                <h1 className="text-2xl font-semibold">{organization.name}</h1>
-                <p className="text-sm text-muted-foreground">
-                    Create vacancies and publish them when ready.
-                </p>
-            </div>
+            <PageHeader
+                title={organization.name}
+                description="Create vacancies and publish them when ready."
+            />
 
             <div className="grid gap-6 lg:grid-cols-5">
                 <Card className="lg:col-span-3">
