@@ -23,7 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('vacancies/{vacancy}/publish', [VacancyController::class, 'publish']);
     Route::get('workspace', [WorkspaceController::class, 'index']);
     Route::get('organizations/{organization}/vacancies', [VacancyController::class, 'index']);
-    Route::post('cv-documents', [CvDocumentController::class, 'store']);
+    Route::post('cv-documents', [CvDocumentController::class, 'store'])->middleware('throttle:10,60');
     Route::get('cv-documents/{cvDocument}', [CvDocumentController::class, 'show']);
     Route::delete('cv-documents/{cvDocument}', [CvDocumentController::class, 'destroy']);
     Route::get('cv-upload', [CvDocumentController::class, 'page'])->name('cv-upload');

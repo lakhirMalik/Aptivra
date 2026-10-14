@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ScanCvDocument;
 use App\Models\CvDocument;
+use App\Support\Audit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -34,6 +35,8 @@ class CvDocumentController extends Controller
         $file = $request->file('file');
         abort_unless($file instanceof UploadedFile, 422);
 
+        $userId = $request->user()->id;
+
         $path = Storage::disk('local')->putFileAs(
             'cv/quarantine',
             $file,
@@ -41,8 +44,17 @@ class CvDocumentController extends Controller
         );
         abort_if($path === false, 500, 'The file could not be stored.');
 
+        CvDocument::query()
+            ->where('user_id', $userId)
+            ->get()
+            ->each(function (CvDocument $old) use ($userId): void {
+                Storage::disk('local')->delete($old->storage_path);
+                Audit::record('cv.replaced', $userId, $old);
+                $old->delete();
+            });
+
         $document = CvDocument::create([
-            'user_id' => $request->user()->id,
+            'user_id' => $userId,
             'original_name' => $file->getClientOriginalName(),
             'mime' => $file->getMimeType(),
             'size' => $file->getSize(),
@@ -50,6 +62,11 @@ class CvDocumentController extends Controller
             'storage_path' => $path,
             'status' => 'quarantined',
             'expires_at' => now()->addHours(24),
+        ]);
+
+        Audit::record('cv.uploaded', $userId, $document, [
+            'size' => $document->size,
+            'extension' => strtolower($file->getClientOriginalExtension()),
         ]);
 
         ScanCvDocument::dispatch($document->id);
@@ -69,6 +86,7 @@ class CvDocumentController extends Controller
         abort_unless($cvDocument->user_id === $request->user()->id, 404);
 
         Storage::disk('local')->delete($cvDocument->storage_path);
+        Audit::record('cv.deleted', $request->user()->id, $cvDocument);
         $cvDocument->delete();
 
         return response()->json(null, 204);

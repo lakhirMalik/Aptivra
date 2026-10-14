@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\CvDocument;
+use App\Support\Audit;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Process;
@@ -29,8 +30,7 @@ class ScanCvDocument implements ShouldQueue
         $quarantinePath = $document->storage_path;
 
         if ($document->isExpired()) {
-            $disk->delete($quarantinePath);
-            $document->delete();
+            $this->discard($document);
 
             return;
         }
@@ -41,9 +41,14 @@ class ScanCvDocument implements ShouldQueue
 
         $current = CvDocument::find($this->documentId);
 
-        if ($current === null || $current->isExpired()) {
+        if ($current === null) {
             $disk->delete($quarantinePath);
-            $current?->delete();
+
+            return;
+        }
+
+        if ($current->isExpired()) {
+            $this->discard($current);
 
             return;
         }
@@ -52,6 +57,7 @@ class ScanCvDocument implements ShouldQueue
             $cleanPath = 'cv/clean/'.basename($quarantinePath);
             $disk->move($quarantinePath, $cleanPath);
             $current->update(['status' => 'clean', 'storage_path' => $cleanPath]);
+            Audit::record('cv.scan_clean', $current->user_id, $current);
         } elseif ($code === 1) {
             $disk->delete($quarantinePath);
             $current->update([
@@ -59,12 +65,21 @@ class ScanCvDocument implements ShouldQueue
                 'storage_path' => '',
                 'failure_reason' => 'Malware was detected, so the file was deleted.',
             ]);
+            Audit::record('cv.scan_infected', $current->user_id, $current);
         } else {
             $current->update([
                 'status' => 'scan_unavailable',
                 'failure_reason' => 'The scanner was unavailable. The file was not treated as safe.',
             ]);
+            Audit::record('cv.scan_unavailable', $current->user_id, $current);
         }
+    }
+
+    private function discard(CvDocument $document): void
+    {
+        Storage::disk('local')->delete($document->storage_path);
+        Audit::record('cv.expired_removed', $document->user_id, $document);
+        $document->delete();
     }
 
     private function scan(string $path): int

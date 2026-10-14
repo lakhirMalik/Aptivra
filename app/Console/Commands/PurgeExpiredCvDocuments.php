@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\CvDocument;
+use App\Support\Audit;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,6 +19,7 @@ class PurgeExpiredCvDocuments extends Command
 
         foreach ($documents as $document) {
             Storage::disk('local')->delete($document->storage_path);
+            Audit::record('cv.expired_purged', $document->user_id, $document);
             $document->delete();
         }
 
