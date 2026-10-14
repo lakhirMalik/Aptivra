@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CvDocumentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\VacancyController;
@@ -22,6 +23,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('vacancies/{vacancy}/publish', [VacancyController::class, 'publish']);
     Route::get('workspace', [WorkspaceController::class, 'index']);
     Route::get('organizations/{organization}/vacancies', [VacancyController::class, 'index']);
+    Route::post('cv-documents', [CvDocumentController::class, 'store']);
+    Route::get('cv-documents/{cvDocument}', [CvDocumentController::class, 'show']);
+    Route::delete('cv-documents/{cvDocument}', [CvDocumentController::class, 'destroy']);
 });
 
 require __DIR__.'/settings.php';
