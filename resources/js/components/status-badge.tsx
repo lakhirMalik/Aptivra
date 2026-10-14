@@ -15,6 +15,19 @@ const styles = {
     suspended: { label: 'Suspended', icon: OctagonX, className: red },
     draft: { label: 'Draft', icon: FileText, className: gray },
     open: { label: 'Published', icon: CheckCircle2, className: green },
+    quarantined: { label: 'Waiting to scan', icon: Clock, className: amber },
+    scanning: { label: 'Scanning', icon: Clock, className: amber },
+    clean: {
+        label: 'Passed safety scan',
+        icon: CheckCircle2,
+        className: green,
+    },
+    infected: { label: 'Malware found', icon: OctagonX, className: red },
+    scan_unavailable: {
+        label: 'Could not be scanned',
+        icon: OctagonX,
+        className: red,
+    },
 };
 
 export function StatusBadge({

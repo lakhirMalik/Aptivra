@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('cv-documents', [CvDocumentController::class, 'store']);
     Route::get('cv-documents/{cvDocument}', [CvDocumentController::class, 'show']);
     Route::delete('cv-documents/{cvDocument}', [CvDocumentController::class, 'destroy']);
+    Route::inertia('cv-upload', 'cv-upload')->name('cv-upload');
 });
 
 require __DIR__.'/settings.php';

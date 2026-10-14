@@ -65,6 +65,7 @@ class CvDocumentController extends Controller
             'id' => $document->id,
             'original_name' => $document->original_name,
             'status' => $document->status,
+            'failure_reason' => $document->failure_reason,
             'expires_at' => $document->expires_at,
         ];
     }

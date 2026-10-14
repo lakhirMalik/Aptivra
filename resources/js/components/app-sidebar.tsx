@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Building2, LayoutGrid } from 'lucide-react';
+import { Building2, FileText, LayoutGrid } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -25,6 +25,11 @@ const mainNavItems: NavItem[] = [
         title: 'Employer workspace',
         href: '/workspace',
         icon: Building2,
+    },
+    {
+        title: 'CV upload',
+        href: '/cv-upload',
+        icon: FileText,
     },
 ];
 
