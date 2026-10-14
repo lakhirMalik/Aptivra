@@ -48,6 +48,7 @@ class CvDocumentController extends Controller
             'size' => $file->getSize(),
             'sha256' => hash_file('sha256', $file->getRealPath()),
             'storage_path' => $path,
+            'status' => 'quarantined',
             'expires_at' => now()->addHours(24),
         ]);
 
