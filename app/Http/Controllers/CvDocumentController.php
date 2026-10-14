@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ScanCvDocument;
 use App\Models\CvDocument;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,6 +35,8 @@ class CvDocumentController extends Controller
             'storage_path' => $path,
             'expires_at' => now()->addHours(24),
         ]);
+
+        ScanCvDocument::dispatch($document->id);
 
         return response()->json($this->payload($document), 201);
     }
