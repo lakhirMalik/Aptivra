@@ -42,8 +42,8 @@ const formatDateTime = (iso: string) =>
         minute: '2-digit',
     });
 
-export default function CvUpload() {
-    const [doc, setDoc] = useState<Doc | null>(null);
+export default function CvUpload({ current }: { current: Doc | null }) {
+    const [doc, setDoc] = useState<Doc | null>(current);
     const [progress, setProgress] = useState<number | null>(null);
     const [error, setError] = useState('');
     const [dragging, setDragging] = useState(false);

@@ -9,9 +9,24 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CvDocumentController extends Controller
 {
+    public function page(Request $request): Response
+    {
+        $document = CvDocument::query()
+            ->where('user_id', $request->user()->id)
+            ->where('expires_at', '>', now())
+            ->latest('id')
+            ->first();
+
+        return Inertia::render('cv-upload', [
+            'current' => $document ? $this->payload($document) : null,
+        ]);
+    }
+
     public function store(Request $request): JsonResponse
     {
         $request->validate(['file' => 'required|file|mimes:pdf,docx|max:5120']);
