@@ -15,18 +15,30 @@ class DashboardController extends Controller
     public function __invoke(Request $request): Response
     {
         $user = $request->user();
+        $isEmployer = $user->isEmployer();
 
-        // Employer data
-        $organizations = Organization::query()
-            ->whereIn('id', $user->memberships()->pluck('organization_id'))
-            ->withCount('vacancies')
-            ->get(['id', 'name', 'status']);
+        if ($isEmployer) {
+            $organizations = Organization::query()
+                ->whereIn('id', $user->memberships()->pluck('organization_id'))
+                ->withCount('vacancies')
+                ->get(['id', 'name', 'status']);
 
-        $pendingCount = $user->is_admin
-            ? Organization::query()->where('status', 'pending')->count()
-            : null;
+            $pendingCount = $user->is_admin
+                ? Organization::query()->where('status', 'pending')->count()
+                : null;
 
-        // Candidate data
+            return Inertia::render('dashboard', [
+                'accountType' => 'employer',
+                'isEmployer' => true,
+                'organizations' => $organizations,
+                'pendingCount' => $pendingCount,
+                'cvDocument' => null,
+                'recentJobs' => [],
+                'jobFamilies' => [],
+            ]);
+        }
+
+        // Candidate payload
         $cvDocument = CvDocument::query()
             ->where('user_id', $user->id)
             ->where('expires_at', '>', now())
@@ -55,12 +67,10 @@ class DashboardController extends Controller
         $jobFamilies = JobFamily::query()->get(['id', 'name', 'slug']);
 
         return Inertia::render('dashboard', [
-            'accountType' => $user->account_type ?? 'candidate',
-            'isEmployer' => $user->isEmployer(),
-            // Employer payload
-            'organizations' => $organizations,
-            'pendingCount' => $pendingCount,
-            // Candidate payload
+            'accountType' => 'candidate',
+            'isEmployer' => false,
+            'organizations' => [],
+            'pendingCount' => null,
             'cvDocument' => $cvDocument ? [
                 'id' => $cvDocument->id,
                 'original_name' => $cvDocument->original_name,

@@ -11,6 +11,8 @@ class OrganizationController extends Controller
 {
     public function store(Request $request): JsonResponse
     {
+        abort_unless($request->user()->isEmployer() || $request->user()->is_admin, 403, 'Only employers can create organizations.');
+
         $data = $request->validate(['name' => 'required|string|max:150']);
 
         $organization = DB::transaction(function () use ($request, $data) {

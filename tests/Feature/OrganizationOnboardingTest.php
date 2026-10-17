@@ -14,7 +14,7 @@ class OrganizationOnboardingTest extends TestCase
     public function test_pending_organization_needs_admin_approval(): void
     {
         $family = JobFamily::create(['slug' => 'backend', 'name' => 'Backend']);
-        $user = User::factory()->create();
+        $user = User::factory()->employer()->create();
         $admin = User::factory()->create(['is_admin' => true]);
 
         $id = $this->actingAs($user)->postJson('/organizations', ['name' => 'Acme'])

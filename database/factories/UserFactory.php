@@ -57,4 +57,18 @@ class UserFactory extends Factory
             'two_factor_confirmed_at' => now(),
         ]);
     }
+
+    public function employer(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'account_type' => 'employer',
+        ]);
+    }
+
+    public function candidate(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'account_type' => 'candidate',
+        ]);
+    }
 }

@@ -7,6 +7,7 @@ use App\Models\Organization;
 use App\Models\Vacancy;
 use App\Support\Audit;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -87,8 +88,13 @@ class VacancyController extends Controller
         return response()->json($vacancy->fresh());
     }
 
-    public function publicIndex(Request $request): Response
+    public function publicIndex(Request $request): Response|RedirectResponse
     {
+        $user = $request->user();
+        if ($user !== null && $user->isEmployer() && ! $user->is_admin) {
+            return redirect()->route('dashboard');
+        }
+
         $query = Vacancy::query()
             ->where('status', 'open')
             ->with(['organization:id,name', 'jobFamily:id,name,slug', 'versions']);
@@ -120,8 +126,13 @@ class VacancyController extends Controller
         ]);
     }
 
-    public function publicShow(Vacancy $vacancy): Response
+    public function publicShow(Request $request, Vacancy $vacancy): Response|RedirectResponse
     {
+        $user = $request->user();
+        if ($user !== null && $user->isEmployer() && ! $user->is_admin) {
+            return redirect()->route('dashboard');
+        }
+
         abort_unless($vacancy->status === 'open', 404);
 
         $vacancy->load(['organization:id,name', 'jobFamily:id,name,slug', 'versions']);

@@ -19,6 +19,8 @@ class CvDocumentController extends Controller
 {
     public function page(Request $request): Response
     {
+        abort_if($request->user()->isEmployer() && ! $request->user()->is_admin, 403, 'Candidate CV upload is not available for employer accounts.');
+
         $document = CvDocument::query()
             ->where('user_id', $request->user()->id)
             ->where('expires_at', '>', now())
@@ -32,6 +34,8 @@ class CvDocumentController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        abort_if($request->user()->isEmployer() && ! $request->user()->is_admin, 403, 'Candidate CV upload is not available for employer accounts.');
+
         $request->validate(['file' => 'required|file|extensions:pdf,docx|max:5120']);
 
         $file = $request->file('file');

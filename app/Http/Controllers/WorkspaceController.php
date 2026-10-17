@@ -13,6 +13,8 @@ class WorkspaceController extends Controller
     {
         $user = $request->user();
 
+        abort_unless($user->isEmployer() || $user->is_admin, 403, 'Employer workspace is reserved for employer accounts.');
+
         return Inertia::render('workspace', [
             'organizations' => Organization::query()
                 ->whereIn('id', $user->memberships()->pluck('organization_id'))

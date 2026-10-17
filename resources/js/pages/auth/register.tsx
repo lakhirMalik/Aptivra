@@ -16,7 +16,15 @@ type Props = {
 };
 
 export default function Register({ passwordRules }: Props) {
-    const [accountType, setAccountType] = useState<'candidate' | 'employer'>('candidate');
+    const [accountType, setAccountType] = useState<'candidate' | 'employer'>(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('type') === 'employer') {
+                return 'employer';
+            }
+        }
+        return 'candidate';
+    });
 
     return (
         <>
