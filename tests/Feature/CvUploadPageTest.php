@@ -29,7 +29,7 @@ class CvUploadPageTest extends TestCase
         $this->actingAs($user)->get('/cv-upload')->assertInertia(fn (Assert $page) => $page->where('current', null));
 
         $id = $this->actingAs($user)
-            ->postJson('/cv-documents', ['file' => UploadedFile::fake()->create('cv.pdf', 50, 'application/pdf')])
+            ->postJson('/cv-documents', ['file' => UploadedFile::fake()->createWithContent('cv.pdf', "%PDF-1.4\n")])
             ->json('id');
 
         $this->actingAs($user)->get('/cv-upload')->assertInertia(fn (Assert $page) => $page

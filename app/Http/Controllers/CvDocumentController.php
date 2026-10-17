@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Jobs\ScanCvDocument;
 use App\Models\CvDocument;
 use App\Support\Audit;
+use App\Support\DocumentInspector;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,10 +32,16 @@ class CvDocumentController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $request->validate(['file' => 'required|file|mimes:pdf,docx|max:5120']);
+        $request->validate(['file' => 'required|file|extensions:pdf,docx|max:5120']);
 
         $file = $request->file('file');
         abort_unless($file instanceof UploadedFile, 422);
+
+        $problem = DocumentInspector::problem($file);
+
+        if ($problem !== null) {
+            throw ValidationException::withMessages(['file' => [$problem]]);
+        }
 
         $userId = $request->user()->id;
 

@@ -19,7 +19,7 @@ class CvDocumentTest extends TestCase
         $other = User::factory()->create();
 
         $id = $this->actingAs($owner)
-            ->postJson('/cv-documents', ['file' => UploadedFile::fake()->create('cv.pdf', 100, 'application/pdf')])
+            ->postJson('/cv-documents', ['file' => UploadedFile::fake()->createWithContent('cv.pdf', "%PDF-1.4\n")])
             ->assertCreated()->assertJsonPath('status', 'quarantined')->json('id');
 
         $this->actingAs($owner)->getJson("/cv-documents/{$id}")->assertOk();

@@ -16,7 +16,7 @@ class CvAuditTest extends TestCase
 
     private function pdf(): UploadedFile
     {
-        return UploadedFile::fake()->create('cv.pdf', 50, 'application/pdf');
+        return UploadedFile::fake()->createWithContent('cv.pdf', "%PDF-1.4\n");
     }
 
     public function test_upload_and_delete_are_audited_without_file_content(): void

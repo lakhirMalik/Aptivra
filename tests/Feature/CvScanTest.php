@@ -19,7 +19,7 @@ class CvScanTest extends TestCase
     private function upload(User $user): int
     {
         return $this->actingAs($user)
-            ->postJson('/cv-documents', ['file' => UploadedFile::fake()->create('cv.pdf', 50, 'application/pdf')])
+            ->postJson('/cv-documents', ['file' => UploadedFile::fake()->createWithContent('cv.pdf', "%PDF-1.4\n")])
             ->assertCreated()->json('id');
     }
 
