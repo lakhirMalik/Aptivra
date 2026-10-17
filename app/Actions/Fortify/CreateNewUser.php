@@ -26,14 +26,17 @@ class CreateNewUser implements CreatesNewUsers
             'account_type' => ['nullable', 'string', 'in:candidate,employer'],
         ])->validate();
 
+        $accountType = $input['account_type'] ?? 'candidate';
+
         $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
+            'account_type' => $accountType,
         ]);
 
         Audit::record('account.registered', $user->id, $user, [
-            'account_type' => $input['account_type'] ?? 'candidate',
+            'account_type' => $accountType,
         ]);
 
         return $user;
