@@ -5,14 +5,17 @@ namespace App\Providers;
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
+use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -21,7 +24,19 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(RegisterResponseContract::class, function () {
+            return new class implements RegisterResponseContract
+            {
+                public function toResponse($request): SymfonyResponse
+                {
+                    $target = $request->input('account_type') === 'employer' ? '/workspace' : '/dashboard';
+
+                    return $request->wantsJson()
+                        ? new JsonResponse('', 201)
+                        : redirect()->intended($target);
+                }
+            };
+        });
     }
 
     /**

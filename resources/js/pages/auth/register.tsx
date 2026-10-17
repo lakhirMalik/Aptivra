@@ -1,4 +1,6 @@
 import { Form, Head } from '@inertiajs/react';
+import { Building2, User as UserIcon } from 'lucide-react';
+import { useState } from 'react';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import TextLink from '@/components/text-link';
@@ -14,6 +16,8 @@ type Props = {
 };
 
 export default function Register({ passwordRules }: Props) {
+    const [accountType, setAccountType] = useState<'candidate' | 'employer'>('candidate');
+
     return (
         <>
             <Head title="Register" />
@@ -26,6 +30,59 @@ export default function Register({ passwordRules }: Props) {
                 {({ processing, errors }) => (
                     <>
                         <div className="grid gap-6">
+                            <div className="grid gap-2">
+                                <Label>I want to</Label>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <label
+                                        className={`flex cursor-pointer flex-col items-start gap-1 rounded-xl border p-3.5 transition-colors ${
+                                            accountType === 'candidate'
+                                                ? 'border-primary bg-primary/5 text-foreground'
+                                                : 'border-border text-muted-foreground hover:bg-muted/40'
+                                        }`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="account_type"
+                                            value="candidate"
+                                            checked={accountType === 'candidate'}
+                                            onChange={() => setAccountType('candidate')}
+                                            className="sr-only"
+                                        />
+                                        <span className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
+                                            <UserIcon className="size-4 text-primary" aria-hidden="true" />
+                                            Candidate
+                                        </span>
+                                        <span className="text-xs text-muted-foreground">
+                                            Prepare CV & apply
+                                        </span>
+                                    </label>
+
+                                    <label
+                                        className={`flex cursor-pointer flex-col items-start gap-1 rounded-xl border p-3.5 transition-colors ${
+                                            accountType === 'employer'
+                                                ? 'border-primary bg-primary/5 text-foreground'
+                                                : 'border-border text-muted-foreground hover:bg-muted/40'
+                                        }`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="account_type"
+                                            value="employer"
+                                            checked={accountType === 'employer'}
+                                            onChange={() => setAccountType('employer')}
+                                            className="sr-only"
+                                        />
+                                        <span className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
+                                            <Building2 className="size-4 text-primary" aria-hidden="true" />
+                                            Employer
+                                        </span>
+                                        <span className="text-xs text-muted-foreground">
+                                            Post jobs & review
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
                             <div className="grid gap-2">
                                 <Label htmlFor="name">Name</Label>
                                 <Input
@@ -116,5 +173,5 @@ export default function Register({ passwordRules }: Props) {
 
 Register.layout = {
     title: 'Create an account',
-    description: 'Enter your details below to create your account',
+    description: 'Choose your role and enter your details to create your account',
 };
