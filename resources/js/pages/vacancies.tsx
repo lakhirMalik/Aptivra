@@ -248,6 +248,22 @@ export default function Vacancies({
                                         Publish
                                     </Button>
                                 )}
+                                {v.status === 'open' && (
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() =>
+                                            run(() =>
+                                                send(
+                                                    `/vacancies/${v.id}/close`,
+                                                    'POST',
+                                                ),
+                                            )
+                                        }
+                                    >
+                                        Close
+                                    </Button>
+                                )}
                             </div>
                         ))}
                     </CardContent>

@@ -8,6 +8,8 @@ use App\Http\Controllers\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
+Route::get('jobs', [VacancyController::class, 'publicIndex'])->name('jobs.index');
+Route::get('jobs/{vacancy}', [VacancyController::class, 'publicShow'])->name('jobs.show');
 
 Route::inertia('/prototype/candidate', 'prototype/candidate');
 Route::inertia('/prototype/employer', 'prototype/employer');
@@ -21,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('organizations/{organization}/vacancies', [VacancyController::class, 'store']);
     Route::put('vacancies/{vacancy}', [VacancyController::class, 'update']);
     Route::post('vacancies/{vacancy}/publish', [VacancyController::class, 'publish']);
+    Route::post('vacancies/{vacancy}/close', [VacancyController::class, 'close']);
     Route::get('workspace', [WorkspaceController::class, 'index']);
     Route::get('organizations/{organization}/vacancies', [VacancyController::class, 'index']);
     Route::post('cv-documents', [CvDocumentController::class, 'store'])->middleware('throttle:10,60');

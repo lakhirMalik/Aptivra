@@ -33,5 +33,11 @@ class VacancyAccessTest extends TestCase
         $this->actingAs($outsider)->postJson("/vacancies/{$id}/publish")->assertForbidden();
         $this->actingAs($outsider)->postJson("/organizations/{$a->id}/vacancies", $payload)->assertForbidden();
         $this->actingAs($owner)->postJson("/vacancies/{$id}/publish")->assertOk();
+        $this->assertDatabaseHas('audit_events', ['event' => 'vacancy.published', 'user_id' => $owner->id]);
+
+        $this->actingAs($outsider)->postJson("/vacancies/{$id}/close")->assertForbidden();
+        $this->actingAs($owner)->postJson("/vacancies/{$id}/close")->assertOk();
+        $this->assertDatabaseHas('vacancies', ['id' => $id, 'status' => 'closed']);
+        $this->assertDatabaseHas('audit_events', ['event' => 'vacancy.closed', 'user_id' => $owner->id]);
     }
 }

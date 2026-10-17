@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Building2, FileText, LayoutGrid } from 'lucide-react';
+import { Briefcase, Building2, FileText, LayoutGrid } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -20,6 +20,11 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Browse jobs',
+        href: '/jobs',
+        icon: Briefcase,
     },
     {
         title: 'Employer workspace',
