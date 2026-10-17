@@ -3,7 +3,6 @@ import {
     ArrowRight,
     Briefcase,
     Building2,
-    CheckCircle2,
     Clock,
     FileText,
     Inbox,
@@ -13,7 +12,6 @@ import {
     Sparkles,
     UploadCloud,
 } from 'lucide-react';
-import { useState } from 'react';
 import { EmptyState } from '@/components/empty-state';
 import { PageHeader } from '@/components/page-header';
 import { StatCard } from '@/components/stat-card';
@@ -77,7 +75,6 @@ const formatDateTime = (iso: string) =>
     });
 
 export default function Dashboard({
-    accountType,
     isEmployer,
     organizations,
     pendingCount,
@@ -87,11 +84,6 @@ export default function Dashboard({
 }: Props) {
     const { auth } = usePage<{ auth: { user: { name: string } } }>().props;
     const firstName = auth.user.name.split(' ')[0];
-
-    // Determine initial active view: Employer if user is an employer, otherwise Candidate
-    const [viewMode, setViewMode] = useState<'candidate' | 'employer'>(
-        isEmployer ? 'employer' : 'candidate',
-    );
 
     const approved = organizations.filter((o) => o.status === 'approved');
     const totalVacancies = organizations.reduce(
@@ -131,49 +123,19 @@ export default function Dashboard({
 
     return (
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 p-4 md:p-6 lg:gap-8">
-            <Head title="Dashboard" />
+            <Head title={isEmployer ? 'Employer Dashboard' : 'Candidate Dashboard'} />
 
-            {/* Top view switcher if user has access to employer workspace */}
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <PageHeader
-                    title={`Welcome back, ${firstName}`}
-                    description={
-                        viewMode === 'employer'
-                            ? 'Your employer workspace for vacancy publication and candidate reviews.'
-                            : 'Your candidate workspace for private CV preparation and evidence-based jobs.'
-                    }
-                />
+            <PageHeader
+                title={`Welcome back, ${firstName}`}
+                description={
+                    isEmployer
+                        ? 'Your employer workspace for vacancy publication and candidate reviews.'
+                        : 'Your candidate workspace for private CV preparation and evidence-based jobs.'
+                }
+            />
 
-                {isEmployer && (
-                    <div className="flex items-center rounded-lg border bg-muted/40 p-1 self-start sm:self-auto">
-                        <button
-                            type="button"
-                            onClick={() => setViewMode('candidate')}
-                            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
-                                viewMode === 'candidate'
-                                    ? 'bg-background text-foreground shadow-xs'
-                                    : 'text-muted-foreground hover:text-foreground'
-                            }`}
-                        >
-                            Candidate view
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setViewMode('employer')}
-                            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
-                                viewMode === 'employer'
-                                    ? 'bg-background text-foreground shadow-xs'
-                                    : 'text-muted-foreground hover:text-foreground'
-                            }`}
-                        >
-                            Employer view
-                        </button>
-                    </div>
-                )}
-            </div>
-
-            {/* CANDIDATE VIEW */}
-            {viewMode === 'candidate' && (
+            {/* CANDIDATE VIEW: Strictly rendered for candidate accounts */}
+            {!isEmployer ? (
                 <div className="flex flex-col gap-6 lg:gap-8">
                     {/* Candidate Top Stats */}
                     <div className="grid gap-4 sm:grid-cols-3">
@@ -363,32 +325,11 @@ export default function Dashboard({
                                     </ul>
                                 </CardContent>
                             </Card>
-
-                            {!isEmployer && (
-                                <Card className="shadow-xs border-dashed">
-                                    <CardHeader>
-                                        <CardTitle className="text-sm">Hiring on Aptivra?</CardTitle>
-                                        <CardDescription className="text-xs">
-                                            Register your company to publish vacancies and inspect evidence-linked applications.
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <Button asChild size="sm" variant="outline" className="w-full">
-                                            <Link href="/workspace">
-                                                <Building2 className="size-4 mr-1.5" aria-hidden="true" />
-                                                Create Employer Workspace
-                                            </Link>
-                                        </Button>
-                                    </CardContent>
-                                </Card>
-                            )}
                         </div>
                     </div>
                 </div>
-            )}
-
-            {/* EMPLOYER VIEW */}
-            {viewMode === 'employer' && (
+            ) : (
+                /* EMPLOYER VIEW: Strictly rendered for employer accounts */
                 <div className="flex flex-col gap-6 lg:gap-8">
                     {/* Employer Stats */}
                     <div

@@ -36,11 +36,6 @@ export function AppSidebar() {
                   href: '/jobs',
                   icon: Briefcase,
               },
-              {
-                  title: 'CV upload',
-                  href: '/cv-upload',
-                  icon: FileText,
-              },
           ]
         : [
               {
@@ -57,11 +52,6 @@ export function AppSidebar() {
                   title: 'Browse jobs',
                   href: '/jobs',
                   icon: Briefcase,
-              },
-              {
-                  title: 'Employer workspace',
-                  href: '/workspace',
-                  icon: Building2,
               },
           ];
 
