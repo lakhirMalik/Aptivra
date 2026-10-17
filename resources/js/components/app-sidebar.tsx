@@ -31,11 +31,6 @@ export function AppSidebar() {
                   href: '/workspace',
                   icon: Building2,
               },
-              {
-                  title: 'Browse jobs',
-                  href: '/jobs',
-                  icon: Briefcase,
-              },
           ]
         : [
               {
