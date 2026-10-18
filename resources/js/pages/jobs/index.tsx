@@ -60,7 +60,11 @@ export default function JobsIndex({
                 <Button
                     asChild
                     size="sm"
-                    variant={selectedFamily === null || selectedFamily === '' ? 'default' : 'outline'}
+                    variant={
+                        selectedFamily === null || selectedFamily === ''
+                            ? 'default'
+                            : 'outline'
+                    }
                 >
                     <Link href="/jobs">All roles</Link>
                 </Button>
@@ -69,7 +73,9 @@ export default function JobsIndex({
                         key={f.id}
                         asChild
                         size="sm"
-                        variant={selectedFamily === f.slug ? 'default' : 'outline'}
+                        variant={
+                            selectedFamily === f.slug ? 'default' : 'outline'
+                        }
                     >
                         <Link href={`/jobs?family=${f.slug}`}>{f.name}</Link>
                     </Button>
@@ -85,7 +91,9 @@ export default function JobsIndex({
                             description="Approved employers will publish open positions here. Check back soon or upload your CV to start preparation."
                             action={
                                 <Button asChild variant="outline">
-                                    <Link href="/cv-upload">Upload your CV</Link>
+                                    <Link href="/cv-upload">
+                                        Upload your CV
+                                    </Link>
                                 </Button>
                             }
                         />
@@ -96,7 +104,7 @@ export default function JobsIndex({
                     {vacancies.map((v) => (
                         <Card
                             key={v.id}
-                            className="flex flex-col justify-between transition-colors hover:border-primary/40 shadow-xs"
+                            className="flex flex-col justify-between shadow-xs transition-colors hover:border-primary/40"
                         >
                             <CardHeader>
                                 <div className="flex items-center justify-between gap-2">
@@ -109,27 +117,39 @@ export default function JobsIndex({
                                         </span>
                                     )}
                                 </div>
-                                <CardTitle className="line-clamp-1 mt-2 text-lg">
+                                <CardTitle className="mt-2 line-clamp-1 text-lg">
                                     {v.title}
                                 </CardTitle>
                                 <CardDescription className="flex items-center gap-1.5 text-xs">
-                                    <Building2 className="size-3.5 shrink-0" aria-hidden="true" />
-                                    <span>{v.organization ?? 'Aptivra Employer'}</span>
+                                    <Building2
+                                        className="size-3.5 shrink-0"
+                                        aria-hidden="true"
+                                    />
+                                    <span>
+                                        {v.organization ?? 'Aptivra Employer'}
+                                    </span>
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <p className="line-clamp-2 text-sm text-muted-foreground">
                                     {v.description}
                                 </p>
-                                <div className="flex items-center justify-between pt-2 border-t text-xs text-muted-foreground">
+                                <div className="flex items-center justify-between border-t pt-2 text-xs text-muted-foreground">
                                     <span className="flex items-center gap-1">
-                                        <CheckCircle2 className="size-3.5 text-primary" aria-hidden="true" />
-                                        {v.criteria_count} requirement{v.criteria_count === 1 ? '' : 's'}
+                                        <CheckCircle2
+                                            className="size-3.5 text-primary"
+                                            aria-hidden="true"
+                                        />
+                                        {v.criteria_count} requirement
+                                        {v.criteria_count === 1 ? '' : 's'}
                                     </span>
                                     <Button asChild size="sm" variant="ghost">
                                         <Link href={`/jobs/${v.id}`}>
                                             View details
-                                            <ArrowRight className="size-3.5 ml-1" aria-hidden="true" />
+                                            <ArrowRight
+                                                className="ml-1 size-3.5"
+                                                aria-hidden="true"
+                                            />
                                         </Link>
                                     </Button>
                                 </div>

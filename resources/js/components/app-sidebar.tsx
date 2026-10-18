@@ -16,8 +16,12 @@ import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 export function AppSidebar() {
-    const { auth } = usePage<{ auth: { user?: { is_employer?: boolean; account_type?: string } } }>().props;
-    const isEmployer = Boolean(auth.user?.is_employer || auth.user?.account_type === 'employer');
+    const { auth } = usePage<{
+        auth: { user?: { is_employer?: boolean; account_type?: string } };
+    }>().props;
+    const isEmployer = Boolean(
+        auth.user?.is_employer || auth.user?.account_type === 'employer',
+    );
 
     const mainNavItems: NavItem[] = isEmployer
         ? [

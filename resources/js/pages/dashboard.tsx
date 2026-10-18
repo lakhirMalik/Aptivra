@@ -123,7 +123,11 @@ export default function Dashboard({
 
     return (
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 p-4 md:p-6 lg:gap-8">
-            <Head title={isEmployer ? 'Employer Dashboard' : 'Candidate Dashboard'} />
+            <Head
+                title={
+                    isEmployer ? 'Employer Dashboard' : 'Candidate Dashboard'
+                }
+            />
 
             <PageHeader
                 title={`Welcome back, ${firstName}`}
@@ -151,7 +155,11 @@ export default function Dashboard({
                                     ? `Expires on ${formatDateTime(cvDocument.expires_at)}`
                                     : 'Upload a PDF or DOCX file'
                             }
-                            icon={cvDocument?.status === 'clean' ? ShieldCheck : FileText}
+                            icon={
+                                cvDocument?.status === 'clean'
+                                    ? ShieldCheck
+                                    : FileText
+                            }
                         />
                         <StatCard
                             label="Target Roles"
@@ -161,7 +169,11 @@ export default function Dashboard({
                         />
                         <StatCard
                             label="Open Vacancies"
-                            value={recentJobs.length > 0 ? `${recentJobs.length} Recent` : '0 Active'}
+                            value={
+                                recentJobs.length > 0
+                                    ? `${recentJobs.length} Recent`
+                                    : '0 Active'
+                            }
                             hint="Evidence-based recruitment"
                             icon={Briefcase}
                         />
@@ -174,12 +186,20 @@ export default function Dashboard({
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <CardTitle>My CV & Safety Scan</CardTitle>
+                                            <CardTitle>
+                                                My CV & Safety Scan
+                                            </CardTitle>
                                             <CardDescription>
-                                                Private to you. Evaluated without automated rejection or demographic inference.
+                                                Private to you. Evaluated
+                                                without automated rejection or
+                                                demographic inference.
                                             </CardDescription>
                                         </div>
-                                        {cvDocument && <StatusBadge status={cvDocument.status} />}
+                                        {cvDocument && (
+                                            <StatusBadge
+                                                status={cvDocument.status}
+                                            />
+                                        )}
                                     </div>
                                 </CardHeader>
                                 <CardContent>
@@ -187,22 +207,40 @@ export default function Dashboard({
                                         <div className="flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-center sm:justify-between">
                                             <div className="flex items-center gap-3">
                                                 <div className="rounded-lg bg-accent p-2.5 text-accent-foreground">
-                                                    <FileText className="size-5" aria-hidden="true" />
+                                                    <FileText
+                                                        className="size-5"
+                                                        aria-hidden="true"
+                                                    />
                                                 </div>
                                                 <div className="min-w-0">
                                                     <p className="truncate font-medium">
-                                                        {cvDocument.original_name}
+                                                        {
+                                                            cvDocument.original_name
+                                                        }
                                                     </p>
-                                                    <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
-                                                        <Clock className="size-3.5" aria-hidden="true" />
-                                                        Automatic 24h deletion: {formatDateTime(cvDocument.expires_at)}
+                                                    <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
+                                                        <Clock
+                                                            className="size-3.5"
+                                                            aria-hidden="true"
+                                                        />
+                                                        Automatic 24h deletion:{' '}
+                                                        {formatDateTime(
+                                                            cvDocument.expires_at,
+                                                        )}
                                                     </p>
                                                 </div>
                                             </div>
-                                            <Button asChild size="sm" variant="outline">
+                                            <Button
+                                                asChild
+                                                size="sm"
+                                                variant="outline"
+                                            >
                                                 <Link href="/cv-upload">
                                                     Manage CV
-                                                    <ArrowRight className="size-4 ml-1.5" aria-hidden="true" />
+                                                    <ArrowRight
+                                                        className="ml-1.5 size-4"
+                                                        aria-hidden="true"
+                                                    />
                                                 </Link>
                                             </Button>
                                         </div>
@@ -213,7 +251,9 @@ export default function Dashboard({
                                             description="Upload your CV for a private safety scan and role requirement check. Files are deleted automatically after 24 hours."
                                             action={
                                                 <Button asChild>
-                                                    <Link href="/cv-upload">Upload your CV</Link>
+                                                    <Link href="/cv-upload">
+                                                        Upload your CV
+                                                    </Link>
                                                 </Button>
                                             }
                                         />
@@ -226,15 +266,25 @@ export default function Dashboard({
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <CardTitle>Open Vacancies</CardTitle>
+                                            <CardTitle>
+                                                Open Vacancies
+                                            </CardTitle>
                                             <CardDescription>
-                                                Roles published by approved employers on Aptivra.
+                                                Roles published by approved
+                                                employers on Aptivra.
                                             </CardDescription>
                                         </div>
-                                        <Button asChild variant="ghost" size="sm">
+                                        <Button
+                                            asChild
+                                            variant="ghost"
+                                            size="sm"
+                                        >
                                             <Link href="/jobs">
                                                 Browse all
-                                                <ArrowRight className="size-4 ml-1" aria-hidden="true" />
+                                                <ArrowRight
+                                                    className="ml-1 size-4"
+                                                    aria-hidden="true"
+                                                />
                                             </Link>
                                         </Button>
                                     </div>
@@ -255,22 +305,46 @@ export default function Dashboard({
                                                 >
                                                     <div className="min-w-0 space-y-1">
                                                         <div className="flex items-center gap-2">
-                                                            <p className="truncate font-medium">{j.title}</p>
-                                                            <Badge variant="secondary" className="text-[10px]">
+                                                            <p className="truncate font-medium">
+                                                                {j.title}
+                                                            </p>
+                                                            <Badge
+                                                                variant="secondary"
+                                                                className="text-[10px]"
+                                                            >
                                                                 {j.job_family}
                                                             </Badge>
                                                         </div>
-                                                        <p className="text-xs text-muted-foreground flex items-center gap-1.5">
-                                                            <Building2 className="size-3.5" aria-hidden="true" />
-                                                            <span>{j.organization}</span>
+                                                        <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                                                            <Building2
+                                                                className="size-3.5"
+                                                                aria-hidden="true"
+                                                            />
+                                                            <span>
+                                                                {j.organization}
+                                                            </span>
                                                             <span>•</span>
-                                                            <span>{j.criteria_count} requirements</span>
+                                                            <span>
+                                                                {
+                                                                    j.criteria_count
+                                                                }{' '}
+                                                                requirements
+                                                            </span>
                                                         </p>
                                                     </div>
-                                                    <Button asChild size="sm" variant="outline">
-                                                        <Link href={`/jobs/${j.id}`}>
+                                                    <Button
+                                                        asChild
+                                                        size="sm"
+                                                        variant="outline"
+                                                    >
+                                                        <Link
+                                                            href={`/jobs/${j.id}`}
+                                                        >
                                                             View requirements
-                                                            <ArrowRight className="size-3.5 ml-1" aria-hidden="true" />
+                                                            <ArrowRight
+                                                                className="ml-1 size-3.5"
+                                                                aria-hidden="true"
+                                                            />
                                                         </Link>
                                                     </Button>
                                                 </li>
@@ -287,7 +361,8 @@ export default function Dashboard({
                                 <CardHeader>
                                     <CardTitle>Evaluated Role Tracks</CardTitle>
                                     <CardDescription>
-                                        Curated job families supported in Aptivra FYP.
+                                        Curated job families supported in
+                                        Aptivra FYP.
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent className="space-y-3">
@@ -298,10 +373,18 @@ export default function Dashboard({
                                             className="flex items-center justify-between rounded-lg border p-3 text-sm transition-colors hover:bg-muted/30"
                                         >
                                             <div className="flex items-center gap-2">
-                                                <Sparkles className="size-4 text-primary" aria-hidden="true" />
-                                                <span className="font-medium">{f.name}</span>
+                                                <Sparkles
+                                                    className="size-4 text-primary"
+                                                    aria-hidden="true"
+                                                />
+                                                <span className="font-medium">
+                                                    {f.name}
+                                                </span>
                                             </div>
-                                            <ArrowRight className="size-4 text-muted-foreground" aria-hidden="true" />
+                                            <ArrowRight
+                                                className="size-4 text-muted-foreground"
+                                                aria-hidden="true"
+                                            />
                                         </Link>
                                     ))}
                                 </CardContent>
@@ -315,12 +398,27 @@ export default function Dashboard({
                                 <CardContent>
                                     <ul className="space-y-3 text-xs text-muted-foreground">
                                         <li className="flex items-start gap-2">
-                                            <Lock className="size-3.5 text-primary shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>Your CV and practice attempts are private and never visible to employers unless you submit an application.</span>
+                                            <Lock
+                                                className="mt-0.5 size-3.5 shrink-0 text-primary"
+                                                aria-hidden="true"
+                                            />
+                                            <span>
+                                                Your CV and practice attempts
+                                                are private and never visible to
+                                                employers unless you submit an
+                                                application.
+                                            </span>
                                         </li>
                                         <li className="flex items-start gap-2">
-                                            <Clock className="size-3.5 text-primary shrink-0 mt-0.5" aria-hidden="true" />
-                                            <span>One-off preparation files are automatically destroyed 24 hours after upload.</span>
+                                            <Clock
+                                                className="mt-0.5 size-3.5 shrink-0 text-primary"
+                                                aria-hidden="true"
+                                            />
+                                            <span>
+                                                One-off preparation files are
+                                                automatically destroyed 24 hours
+                                                after upload.
+                                            </span>
                                         </li>
                                     </ul>
                                 </CardContent>
@@ -371,12 +469,16 @@ export default function Dashboard({
                                     <div>
                                         <CardTitle>Your Workspaces</CardTitle>
                                         <CardDescription>
-                                            Organizations you belong to as owner, recruiter, or reviewer.
+                                            Organizations you belong to as
+                                            owner, recruiter, or reviewer.
                                         </CardDescription>
                                     </div>
                                     <Button asChild size="sm" variant="outline">
                                         <Link href="/workspace">
-                                            <Plus className="size-4 mr-1" aria-hidden="true" />
+                                            <Plus
+                                                className="mr-1 size-4"
+                                                aria-hidden="true"
+                                            />
                                             New workspace
                                         </Link>
                                     </Button>
@@ -390,7 +492,9 @@ export default function Dashboard({
                                         description="Create a workspace to start publishing vacancies on Aptivra."
                                         action={
                                             <Button asChild>
-                                                <Link href="/workspace">Create a workspace</Link>
+                                                <Link href="/workspace">
+                                                    Create a workspace
+                                                </Link>
                                             </Button>
                                         }
                                     />
@@ -402,23 +506,34 @@ export default function Dashboard({
                                                 className="flex flex-wrap items-center justify-between gap-3 rounded-xl border p-4"
                                             >
                                                 <div className="min-w-0 space-y-1.5">
-                                                    <p className="truncate font-medium">{o.name}</p>
+                                                    <p className="truncate font-medium">
+                                                        {o.name}
+                                                    </p>
                                                     <div className="flex items-center gap-3">
-                                                        <StatusBadge status={o.status} />
+                                                        <StatusBadge
+                                                            status={o.status}
+                                                        />
                                                         <span className="text-sm text-muted-foreground">
                                                             {o.vacancies_count}{' '}
-                                                            {o.vacancies_count === 1
+                                                            {o.vacancies_count ===
+                                                            1
                                                                 ? 'vacancy'
                                                                 : 'vacancies'}
                                                         </span>
                                                     </div>
                                                 </div>
                                                 {o.status === 'approved' && (
-                                                    <Button asChild variant="outline" size="sm">
-                                                        <Link href={`/organizations/${o.id}/vacancies`}>
+                                                    <Button
+                                                        asChild
+                                                        variant="outline"
+                                                        size="sm"
+                                                    >
+                                                        <Link
+                                                            href={`/organizations/${o.id}/vacancies`}
+                                                        >
                                                             Vacancies
                                                             <ArrowRight
-                                                                className="size-4 ml-1"
+                                                                className="ml-1 size-4"
                                                                 aria-hidden="true"
                                                             />
                                                         </Link>
@@ -440,7 +555,10 @@ export default function Dashboard({
                                 <Button asChild className="w-full">
                                     <Link href={next.href}>
                                         {next.label}
-                                        <ArrowRight className="size-4 ml-1.5" aria-hidden="true" />
+                                        <ArrowRight
+                                            className="ml-1.5 size-4"
+                                            aria-hidden="true"
+                                        />
                                     </Link>
                                 </Button>
                             </CardContent>

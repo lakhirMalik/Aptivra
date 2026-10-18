@@ -1,13 +1,11 @@
 import { Head, Link } from '@inertiajs/react';
 import {
     ArrowLeft,
-    Briefcase,
     Building2,
     CheckCircle2,
     FileText,
     Sparkles,
 } from 'lucide-react';
-import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -54,7 +52,10 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
             <div className="flex items-center gap-2">
                 <Button asChild variant="ghost" size="sm">
                     <Link href="/jobs">
-                        <ArrowLeft className="size-4 mr-1.5" aria-hidden="true" />
+                        <ArrowLeft
+                            className="mr-1.5 size-4"
+                            aria-hidden="true"
+                        />
                         Back to vacancies
                     </Link>
                 </Button>
@@ -62,7 +63,9 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
 
             <div className="flex flex-col gap-3 border-b pb-6">
                 <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="secondary">{vacancy.job_family ?? 'General'}</Badge>
+                    <Badge variant="secondary">
+                        {vacancy.job_family ?? 'General'}
+                    </Badge>
                     <Badge variant="outline">Version {vacancy.version}</Badge>
                     {vacancy.published_at && (
                         <span className="text-xs text-muted-foreground">
@@ -86,7 +89,7 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
                             <CardTitle>Role Overview</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="whitespace-pre-line text-sm leading-relaxed text-foreground/90">
+                            <p className="text-sm leading-relaxed whitespace-pre-line text-foreground/90">
                                 {vacancy.description}
                             </p>
                         </CardContent>
@@ -96,14 +99,19 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
                         <CardHeader>
                             <CardTitle>Evidence-Based Requirements</CardTitle>
                             <CardDescription>
-                                Criteria defined by the employer. In Aptivra, your CV evidence is compared against these points without automated rejection.
+                                Criteria defined by the employer. In Aptivra,
+                                your CV evidence is compared against these
+                                points without automated rejection.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">
                             {required.length > 0 && (
                                 <div className="space-y-3">
-                                    <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                                        <CheckCircle2 className="size-4 text-primary" aria-hidden="true" />
+                                    <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                                        <CheckCircle2
+                                            className="size-4 text-primary"
+                                            aria-hidden="true"
+                                        />
                                         Required Criteria ({required.length})
                                     </h3>
                                     <ul className="space-y-2">
@@ -112,7 +120,10 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
                                                 key={i}
                                                 className="flex items-start gap-2.5 rounded-lg border bg-muted/30 p-3 text-sm"
                                             >
-                                                <Badge variant="default" className="mt-0.5 text-[10px] shrink-0">
+                                                <Badge
+                                                    variant="default"
+                                                    className="mt-0.5 shrink-0 text-[10px]"
+                                                >
                                                     Required
                                                 </Badge>
                                                 <span>{c.text}</span>
@@ -124,8 +135,11 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
 
                             {preferred.length > 0 && (
                                 <div className="space-y-3">
-                                    <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                                        <Sparkles className="size-4 text-muted-foreground" aria-hidden="true" />
+                                    <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                                        <Sparkles
+                                            className="size-4 text-muted-foreground"
+                                            aria-hidden="true"
+                                        />
                                         Preferred Criteria ({preferred.length})
                                     </h3>
                                     <ul className="space-y-2">
@@ -134,10 +148,15 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
                                                 key={i}
                                                 className="flex items-start gap-2.5 rounded-lg border bg-muted/20 p-3 text-sm text-muted-foreground"
                                             >
-                                                <Badge variant="outline" className="mt-0.5 text-[10px] shrink-0">
+                                                <Badge
+                                                    variant="outline"
+                                                    className="mt-0.5 shrink-0 text-[10px]"
+                                                >
                                                     Preferred
                                                 </Badge>
-                                                <span className="text-foreground">{c.text}</span>
+                                                <span className="text-foreground">
+                                                    {c.text}
+                                                </span>
                                             </li>
                                         ))}
                                     </ul>
@@ -152,18 +171,24 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
                         <CardHeader>
                             <CardTitle>Prepare Before You Apply</CardTitle>
                             <CardDescription>
-                                Upload your CV privately to see how your demonstrated skills align with this role.
+                                Upload your CV privately to see how your
+                                demonstrated skills align with this role.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <Button asChild className="w-full">
                                 <Link href="/cv-upload">
-                                    <FileText className="size-4 mr-2" aria-hidden="true" />
+                                    <FileText
+                                        className="mr-2 size-4"
+                                        aria-hidden="true"
+                                    />
                                     Check your CV
                                 </Link>
                             </Button>
                             <p className="text-xs text-muted-foreground">
-                                Uploaded CVs are kept strictly private, scanned for safety, and automatically deleted after 24 hours unless explicitly saved.
+                                Uploaded CVs are kept strictly private, scanned
+                                for safety, and automatically deleted after 24
+                                hours unless explicitly saved.
                             </p>
                         </CardContent>
                     </Card>

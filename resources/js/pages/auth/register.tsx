@@ -16,15 +16,17 @@ type Props = {
 };
 
 export default function Register({ passwordRules }: Props) {
-    const [accountType, setAccountType] = useState<'candidate' | 'employer'>(() => {
-        if (typeof window !== 'undefined') {
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('type') === 'employer') {
-                return 'employer';
+    const [accountType, setAccountType] = useState<'candidate' | 'employer'>(
+        () => {
+            if (typeof window !== 'undefined') {
+                const params = new URLSearchParams(window.location.search);
+                if (params.get('type') === 'employer') {
+                    return 'employer';
+                }
             }
-        }
-        return 'candidate';
-    });
+            return 'candidate';
+        },
+    );
 
     return (
         <>
@@ -52,12 +54,19 @@ export default function Register({ passwordRules }: Props) {
                                             type="radio"
                                             name="account_type"
                                             value="candidate"
-                                            checked={accountType === 'candidate'}
-                                            onChange={() => setAccountType('candidate')}
+                                            checked={
+                                                accountType === 'candidate'
+                                            }
+                                            onChange={() =>
+                                                setAccountType('candidate')
+                                            }
                                             className="sr-only"
                                         />
                                         <span className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
-                                            <UserIcon className="size-4 text-primary" aria-hidden="true" />
+                                            <UserIcon
+                                                className="size-4 text-primary"
+                                                aria-hidden="true"
+                                            />
                                             Candidate
                                         </span>
                                         <span className="text-xs text-muted-foreground">
@@ -77,11 +86,16 @@ export default function Register({ passwordRules }: Props) {
                                             name="account_type"
                                             value="employer"
                                             checked={accountType === 'employer'}
-                                            onChange={() => setAccountType('employer')}
+                                            onChange={() =>
+                                                setAccountType('employer')
+                                            }
                                             className="sr-only"
                                         />
                                         <span className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
-                                            <Building2 className="size-4 text-primary" aria-hidden="true" />
+                                            <Building2
+                                                className="size-4 text-primary"
+                                                aria-hidden="true"
+                                            />
                                             Employer
                                         </span>
                                         <span className="text-xs text-muted-foreground">
@@ -181,5 +195,6 @@ export default function Register({ passwordRules }: Props) {
 
 Register.layout = {
     title: 'Create an account',
-    description: 'Choose your role and enter your details to create your account',
+    description:
+        'Choose your role and enter your details to create your account',
 };
