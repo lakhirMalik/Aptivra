@@ -19,6 +19,11 @@ export function AppSidebar() {
     const { auth } = usePage<{
         auth: { user?: { is_employer?: boolean; account_type?: string } };
     }>().props;
+
+    if (!auth.user) {
+        return null;
+    }
+
     const isEmployer = Boolean(
         auth.user?.is_employer || auth.user?.account_type === 'employer',
     );

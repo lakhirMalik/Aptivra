@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { ArrowRight, Briefcase, Building2, CheckCircle2 } from 'lucide-react';
 import { EmptyState } from '@/components/empty-state';
 import { PageHeader } from '@/components/page-header';
@@ -47,6 +47,8 @@ export default function JobsIndex({
     jobFamilies: Family[];
     selectedFamily: string | null;
 }) {
+    const { auth } = usePage<{ auth: { user?: unknown } }>().props;
+
     return (
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 p-4 md:p-6 lg:gap-8">
             <Head title="Browse Vacancies" />
@@ -88,13 +90,25 @@ export default function JobsIndex({
                         <EmptyState
                             icon={Briefcase}
                             title="No published vacancies found"
-                            description="Approved employers will publish open positions here. Check back soon or upload your CV to start preparation."
+                            description={
+                                auth.user
+                                    ? "Approved employers will publish open positions here. Check back soon or upload your CV to start preparation."
+                                    : "Approved employers will publish open positions here. Register as a candidate to prepare your CV in advance."
+                            }
                             action={
-                                <Button asChild variant="outline">
-                                    <Link href="/cv-upload">
-                                        Upload your CV
-                                    </Link>
-                                </Button>
+                                auth.user ? (
+                                    <Button asChild variant="outline">
+                                        <Link href="/cv-upload">
+                                            Upload your CV
+                                        </Link>
+                                    </Button>
+                                ) : (
+                                    <Button asChild variant="outline">
+                                        <Link href="/register?type=candidate">
+                                            Register as Candidate
+                                        </Link>
+                                    </Button>
+                                )
                             }
                         />
                     </CardContent>

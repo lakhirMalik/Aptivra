@@ -1,13 +1,16 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import {
     ArrowLeft,
     Building2,
     CheckCircle2,
     FileText,
+    LogIn,
     Sparkles,
+    User as UserIcon,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { login } from '@/routes';
 import {
     Card,
     CardContent,
@@ -42,6 +45,10 @@ const formatDate = (iso: string | null) =>
         : null;
 
 export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
+    const { auth } = usePage<{
+        auth: { user?: { name: string; account_type?: string } };
+    }>().props;
+    const isGuest = !auth.user;
     const required = vacancy.criteria.filter((c) => c.type === 'required');
     const preferred = vacancy.criteria.filter((c) => c.type === 'preferred');
 
@@ -167,31 +174,74 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
                 </div>
 
                 <div className="space-y-6">
-                    <Card className="shadow-xs">
-                        <CardHeader>
-                            <CardTitle>Prepare Before You Apply</CardTitle>
-                            <CardDescription>
-                                Upload your CV privately to see how your
-                                demonstrated skills align with this role.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <Button asChild className="w-full">
-                                <Link href="/cv-upload">
-                                    <FileText
-                                        className="mr-2 size-4"
-                                        aria-hidden="true"
-                                    />
-                                    Check your CV
-                                </Link>
-                            </Button>
-                            <p className="text-xs text-muted-foreground">
-                                Uploaded CVs are kept strictly private, scanned
-                                for safety, and automatically deleted after 24
-                                hours unless explicitly saved.
-                            </p>
-                        </CardContent>
-                    </Card>
+                    {isGuest ? (
+                        <Card className="border-primary/30 shadow-xs">
+                            <CardHeader>
+                                <CardTitle>Apply for this Position</CardTitle>
+                                <CardDescription>
+                                    Sign in or create a candidate account to apply
+                                    and verify your CV evidence against these
+                                    criteria.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-3">
+                                <Button asChild className="w-full">
+                                    <Link href={login()}>
+                                        <LogIn
+                                            className="mr-2 size-4"
+                                            aria-hidden="true"
+                                        />
+                                        Log in to apply
+                                    </Link>
+                                </Button>
+                                <Button
+                                    asChild
+                                    variant="outline"
+                                    className="w-full"
+                                >
+                                    <Link href="/register?type=candidate">
+                                        <UserIcon
+                                            className="mr-2 size-4"
+                                            aria-hidden="true"
+                                        />
+                                        Register as Candidate
+                                    </Link>
+                                </Button>
+                                <p className="pt-1 text-xs text-muted-foreground">
+                                    Candidate accounts are free, private, and
+                                    guarantee 24-hour automatic destruction of
+                                    unsubmitted CVs.
+                                </p>
+                            </CardContent>
+                        </Card>
+                    ) : (
+                        <Card className="shadow-xs">
+                            <CardHeader>
+                                <CardTitle>Prepare Before You Apply</CardTitle>
+                                <CardDescription>
+                                    Upload your CV privately to see how your
+                                    demonstrated skills align with this role.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <Button asChild className="w-full">
+                                    <Link href="/cv-upload">
+                                        <FileText
+                                            className="mr-2 size-4"
+                                            aria-hidden="true"
+                                        />
+                                        Check your CV
+                                    </Link>
+                                </Button>
+                                <p className="text-xs text-muted-foreground">
+                                    Uploaded CVs are kept strictly private,
+                                    scanned for safety, and automatically
+                                    deleted after 24 hours unless explicitly
+                                    saved.
+                                </p>
+                            </CardContent>
+                        </Card>
+                    )}
                 </div>
             </div>
         </div>
