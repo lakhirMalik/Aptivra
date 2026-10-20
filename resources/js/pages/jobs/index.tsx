@@ -92,8 +92,8 @@ export default function JobsIndex({
                             title="No published vacancies found"
                             description={
                                 auth.user
-                                    ? "Approved employers will publish open positions here. Check back soon or upload your CV to start preparation."
-                                    : "Approved employers will publish open positions here. Register as a candidate to prepare your CV in advance."
+                                    ? 'Approved employers will publish open positions here. Check back soon or upload your CV to start preparation.'
+                                    : 'Approved employers will publish open positions here. Register as a candidate to prepare your CV in advance.'
                             }
                             action={
                                 auth.user ? (

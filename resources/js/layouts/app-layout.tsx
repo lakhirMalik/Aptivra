@@ -14,9 +14,7 @@ export default function AppLayout({
 
     if (!auth.user) {
         return (
-            <PublicLayout breadcrumbs={breadcrumbs}>
-                {children}
-            </PublicLayout>
+            <PublicLayout breadcrumbs={breadcrumbs}>{children}</PublicLayout>
         );
     }
 

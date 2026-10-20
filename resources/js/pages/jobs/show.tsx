@@ -179,9 +179,9 @@ export default function JobShow({ vacancy }: { vacancy: VacancyDetail }) {
                             <CardHeader>
                                 <CardTitle>Apply for this Position</CardTitle>
                                 <CardDescription>
-                                    Sign in or create a candidate account to apply
-                                    and verify your CV evidence against these
-                                    criteria.
+                                    Sign in or create a candidate account to
+                                    apply and verify your CV evidence against
+                                    these criteria.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-3">

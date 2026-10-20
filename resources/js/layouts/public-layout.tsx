@@ -25,7 +25,10 @@ export default function PublicLayout({
                     <nav className="flex items-center gap-2 sm:gap-3">
                         <Button asChild variant="ghost" size="sm">
                             <Link href="/jobs">
-                                <Briefcase className="mr-1.5 size-4" aria-hidden="true" />
+                                <Briefcase
+                                    className="mr-1.5 size-4"
+                                    aria-hidden="true"
+                                />
                                 Browse Jobs
                             </Link>
                         </Button>
@@ -33,7 +36,9 @@ export default function PublicLayout({
                             <Link href={login()}>Log in</Link>
                         </Button>
                         <Button asChild size="sm">
-                            <Link href="/register?type=candidate">Register</Link>
+                            <Link href="/register?type=candidate">
+                                Register
+                            </Link>
                         </Button>
                     </nav>
                 </div>
@@ -48,15 +53,14 @@ export default function PublicLayout({
             </header>
 
             {/* Content Area */}
-            <main className="flex flex-1 flex-col">
-                {children}
-            </main>
+            <main className="flex flex-1 flex-col">{children}</main>
 
             {/* Public Footer */}
             <footer className="border-t py-8 text-center text-xs text-muted-foreground">
                 <div className="mx-auto max-w-7xl space-y-1 px-4 sm:px-6 lg:px-8">
                     <p>
-                        <strong>Aptivra</strong> &bull; Final Year Project &bull; SZABIST University Karachi Campus
+                        <strong>Aptivra</strong> &bull; Final Year Project
+                        &bull; SZABIST University Karachi Campus
                     </p>
                     <p className="text-muted-foreground/80">
                         Evidence-Based Recruitment &amp; Career Preparation
