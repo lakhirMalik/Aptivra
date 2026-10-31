@@ -1,0 +1,857 @@
+erDiagram
+    application_events {
+        bigint id PK
+        bigint application_id FK
+        bigint actor_user_id FK
+        text new_state
+        text reason
+        bigint amends_event_id FK
+        uuid operation_key
+        timestamptz recorded_at
+        bigint source_referral_id FK
+    }
+    application_referrals {
+        bigint id PK
+        bigint application_id FK
+        integer revision_number
+        text source_type
+        text status
+        bigint recorded_by FK
+        bigint referrer_user_id FK
+        text referrer_description
+        text basis
+        bigint confirmed_by FK
+        timestamptz confirmed_at
+        bigint amends_id FK
+        timestamptz recorded_at
+    }
+    application_reviews {
+        bigint id PK
+        bigint application_id FK
+        bigint stage_id FK
+        bigint assigned_to FK
+        bigint assigned_by FK
+        timestamptz assigned_at
+        timestamptz due_at
+    }
+    application_snapshots {
+        bigint id PK
+        bigint application_id FK
+        jsonb application_fields_json
+        text form_schema_version
+        timestamptz captured_at
+    }
+    applications {
+        bigint id PK
+        bigint submission_id FK
+        bigint vacancy_version_id FK
+        bigint cv_document_id FK
+        bigint retention_scope_id FK
+        text status
+        timestamptz submitted_at
+        timestamptz first_closed_at
+    }
+    assessment_answers {
+        bigint id PK
+        bigint attempt_id FK
+        bigint question_id FK
+        text answer_text
+        timestamptz last_saved_at
+    }
+    assessment_attempts {
+        bigint id PK
+        bigint invitation_id FK
+        integer attempt_number
+        uuid operation_key
+        timestamptz started_at
+        timestamptz deadline_at
+        timestamptz submitted_at
+        timestamptz finalized_at
+        text status
+    }
+    assessment_grades {
+        bigint id PK
+        bigint answer_id FK
+        integer revision_number
+        text marking_kind
+        bigint grader_user_id FK
+        numeric points
+        text reason
+        bigint amends_id FK
+        timestamptz recorded_at
+    }
+    assessment_invitations {
+        bigint id PK
+        bigint application_id FK
+        bigint assessment_version_id FK
+        bigint stage_id FK
+        bigint issued_by FK
+        text token_hash
+        uuid operation_key
+        timestamptz issued_at
+        timestamptz expires_at
+        timestamptz cancelled_at
+        text cancellation_reason
+        integer accommodated_duration_seconds
+        text accommodation_reason
+    }
+    assessment_questions {
+        bigint id PK
+        bigint assessment_version_id FK
+        text question_code
+        text question_text
+        text question_type
+        text skill_tag
+        numeric max_points
+        jsonb options_json
+        text correct_option
+        text rubric
+    }
+    assessment_releases {
+        bigint id PK
+        bigint attempt_id FK
+        bigint released_by FK
+        timestamptz released_at
+        uuid operation_key
+    }
+    assessment_versions {
+        bigint id PK
+        bigint assessment_id FK
+        integer version_number
+        text state
+        integer duration_seconds
+        integer allowed_attempts
+        text outage_policy
+        text accommodation_policy
+        text autosave_policy
+        text source_licence
+        bigint reviewed_by FK
+        timestamptz published_at
+    }
+    assessments {
+        bigint id PK
+        bigint vacancy_id FK
+        text name
+        bigint created_by FK
+        timestamptz created_at
+    }
+    audit_events {
+        bigint id PK
+        bigint organization_id FK
+        bigint actor_user_id FK
+        text action_code
+        text entity_type
+        bigint entity_id
+        uuid operation_key
+        jsonb version_context_json
+        timestamptz recorded_at
+        timestamptz expires_at
+    }
+    auth_tokens {
+        bigint id PK
+        bigint user_id FK
+        text purpose
+        text email_bound
+        text token_hash
+        timestamptz issued_at
+        timestamptz expires_at
+        timestamptz consumed_at
+    }
+    campaign_allowances {
+        bigint id PK
+        bigint vacancy_id FK
+        text grant_kind
+        bigint entitlement_id FK
+        timestamptz first_published_at
+        timestamptz intake_deadline
+        integer acceptance_limit
+        integer reviewer_seat_limit
+        integer accepted_count
+    }
+    campaign_submissions {
+        bigint id PK
+        bigint campaign_allowance_id FK
+        bigint candidate_user_id FK
+        uuid operation_key
+        timestamptz accepted_at
+        timestamptz retain_until
+    }
+    comparison_corrections {
+        bigint id PK
+        bigint comparison_id FK
+        bigint correction_id FK
+    }
+    comparison_criteria_matches {
+        bigint id PK
+        bigint evidence_comparison_id FK
+        bigint role_criterion_id FK
+        bigint vacancy_criterion_id FK
+        text evidence_status
+        text justification
+    }
+    cv_claims {
+        bigint id PK
+        bigint source_passage_id FK
+        text claim_type
+        text statement
+    }
+    cv_documents {
+        bigint id PK
+        bigint artifact_id FK
+        text original_filename
+        text mime_type
+        text origin_document_hash
+        timestamptz created_at
+    }
+    cv_extraction_corrections {
+        bigint id PK
+        bigint source_passage_id FK
+        bigint cv_claim_id FK
+        bigint requested_by FK
+        text earlier_value
+        text proposed_value
+        text request_reason
+        text status
+        bigint reviewed_by FK
+        text review_reason
+        timestamptz reviewed_at
+        bigint supersedes_id FK
+        timestamptz requested_at
+    }
+    cv_extractions {
+        bigint id PK
+        bigint processing_operation_id FK
+        text raw_native_text
+        text raw_ocr_text
+        integer total_pages
+        integer covered_pages
+        text result_state
+        text conversion_version
+        timestamptz extracted_at
+    }
+    cv_passages {
+        bigint id PK
+        bigint cv_extraction_id FK
+        integer page_number
+        integer char_start
+        integer char_end
+        text passage_text
+    }
+    data_subject_requests {
+        bigint id PK
+        bigint requester_user_id FK
+        bigint organization_id FK
+        bigint retention_scope_id FK
+        text request_type
+        timestamptz identity_confirmed_at
+        text status
+        text resolution_explanation
+        timestamptz completed_at
+        bigint export_artifact_id FK
+        timestamptz requested_at
+    }
+    demonstration_entitlements {
+        bigint id PK
+        bigint user_id FK
+        bigint organization_id FK
+        text feature
+        integer quantity
+        timestamptz starts_at
+        timestamptz expires_at
+        bigint granted_by FK
+        text reason
+    }
+    evidence_comparisons {
+        bigint id PK
+        bigint cv_extraction_id FK
+        bigint role_catalogue_version_id FK
+        bigint vacancy_version_id FK
+        bigint manifest_id FK
+        integer coverage_denominator
+        integer supported_numerator
+        text summary
+        timestamptz generated_at
+        text state
+    }
+    grader_assignments {
+        bigint id PK
+        bigint attempt_id FK
+        bigint grader_user_id FK
+        bigint assigned_by FK
+        timestamptz assigned_at
+    }
+    guidance_resources {
+        bigint id PK
+        bigint guidance_id FK
+        bigint learning_resource_id FK
+        integer display_order
+        text rationale
+    }
+    history_renewals {
+        bigint id PK
+        bigint saved_version_id FK
+        bigint actor_user_id FK
+        uuid operation_key
+        timestamptz renewed_at
+    }
+    interview_events {
+        bigint id PK
+        bigint interview_id FK
+        integer revision_number
+        bigint actor_user_id FK
+        text event_type
+        timestamptz scheduled_start
+        timestamptz scheduled_end
+        text display_time_zone
+        text meeting_url
+        text note
+        timestamptz event_at
+        timestamptz recorded_at
+        bigint amends_id FK
+        text effective_status
+    }
+    interview_schedules {
+        bigint id PK
+        bigint application_id FK
+        bigint stage_id FK
+        bigint created_by FK
+        timestamptz created_at
+    }
+    job_alerts {
+        bigint id PK
+        bigint user_id FK
+        bigint job_family_id FK
+        text location_preference
+        text experience_preference
+        text workplace_preference
+        text frequency
+        timestamptz opted_in_at
+        timestamptz opted_out_at
+        timestamptz last_matched_at
+    }
+    job_families {
+        bigint id PK
+        text code
+        text name
+    }
+    learning_guidance {
+        bigint id PK
+        bigint retention_scope_id FK
+        bigint role_catalogue_version_id FK
+        bigint comparison_id FK
+        bigint practice_session_id FK
+        text goal
+        text rationale
+        bigint manifest_id FK
+        timestamptz generated_at
+    }
+    learning_resources {
+        bigint id PK
+        bigint job_family_id FK
+        text resource_code
+        integer version_number
+        text title
+        text resource_url
+        text source_licence
+        bigint reviewed_by FK
+        timestamptz reviewed_at
+    }
+    match_evidence {
+        bigint id PK
+        bigint criterion_match_id FK
+        bigint cv_claim_id FK
+    }
+    membership_permissions {
+        bigint id PK
+        bigint membership_id FK
+        text permission_code
+        bigint granted_by FK
+        timestamptz granted_at
+    }
+    memberships {
+        bigint id PK
+        bigint organization_id FK
+        bigint user_id FK
+        text role
+        text status
+        bigint changed_by FK
+        timestamptz created_at
+    }
+    notifications {
+        bigint id PK
+        bigint recipient_user_id FK
+        bigint retention_scope_id FK
+        text event_key
+        text template_code
+        text target_type
+        bigint target_id
+        timestamptz read_at
+        timestamptz created_at
+        timestamptz expires_at
+    }
+    organization_decisions {
+        bigint id PK
+        bigint organization_id FK
+        bigint actor_user_id FK
+        text outcome
+        text reason
+        timestamptz recorded_at
+    }
+    organization_trial_ledger {
+        bigint id PK
+        bigint organization_id FK
+        bigint free_campaign_vacancy_id FK
+        timestamptz used_at
+        timestamptz retain_until
+    }
+    organizations {
+        bigint id PK
+        text name
+        text slug
+        text status
+        bigint created_by FK
+        timestamptz created_at
+        timestamptz closed_at
+    }
+    passkeys {
+        bigint id PK
+        bigint user_id FK
+        text credential_id
+        text public_key
+        bigint signature_counter
+        timestamptz created_at
+    }
+    practice_bank_versions {
+        bigint id PK
+        bigint role_catalogue_version_id FK
+        integer version_number
+        text source_licence
+        text state
+        bigint reviewed_by FK
+        timestamptz published_at
+    }
+    practice_questions {
+        bigint id PK
+        bigint bank_version_id FK
+        text question_code
+        text question_text
+        jsonb options_json
+        text correct_option
+        text explanation
+    }
+    practice_responses {
+        bigint id PK
+        bigint practice_session_id FK
+        bigint practice_question_id FK
+        text selected_option
+        timestamptz submitted_at
+    }
+    practice_sessions {
+        bigint id PK
+        bigint retention_scope_id FK
+        bigint bank_version_id FK
+        uuid operation_key
+        timestamptz started_at
+        timestamptz deadline_at
+        text status
+        timestamptz finished_at
+    }
+    preparation_reports {
+        bigint id PK
+        bigint comparison_id FK
+        bigint artifact_id FK
+        bigint credit_reservation_id FK
+        text state
+        timestamptz ready_at
+    }
+    processing_manifests {
+        bigint id PK
+        text manifest_hash
+        text parser_version
+        text conversion_version
+        text model_revision
+        text prompt_hash
+        jsonb settings_json
+        timestamptz created_at
+    }
+    processing_operations {
+        bigint id PK
+        bigint cv_document_id FK
+        bigint manifest_id FK
+        uuid operation_key
+        text status
+        timestamptz started_at
+        timestamptz deadline_at
+        timestamptz finished_at
+        text failure_code
+    }
+    professional_references {
+        bigint id PK
+        bigint application_id FK
+        bigint recorded_by FK
+        text referee_name
+        text contact_detail
+        text relationship
+        text contact_status
+        text response_note
+        timestamptz recorded_at
+    }
+    purged_retention_records {
+        bigint id PK
+        bigint purged_scope_id
+        text purpose
+        text reason
+        uuid worker_operation_key
+        text result
+        integer artifact_count
+        text error_code
+        timestamptz recorded_at
+        timestamptz expires_at
+    }
+    report_credit_events {
+        bigint id PK
+        bigint reservation_id FK
+        text from_status
+        text to_status
+        text reason
+        timestamptz recorded_at
+    }
+    report_credit_periods {
+        bigint id PK
+        bigint user_id FK
+        date month_start
+        text month_time_zone
+        integer base_allowance
+        bigint additional_entitlement_id FK
+        timestamptz retain_until
+    }
+    report_credit_reservations {
+        bigint id PK
+        bigint period_id FK
+        uuid operation_key
+        text status
+        timestamptz reserved_at
+        timestamptz finalized_at
+        text release_reason
+        timestamptz reservation_expires_at
+    }
+    report_revisions {
+        bigint id PK
+        bigint preparation_report_id FK
+        integer revision_number
+        bigint comparison_id FK
+        bigint artifact_id FK
+        bigint created_by FK
+        text reason
+        timestamptz created_at
+    }
+    retention_scopes {
+        bigint id PK
+        text purpose
+        bigint owner_user_id FK
+        bigint organization_id FK
+        timestamptz started_at
+        timestamptz processing_deadline
+        timestamptz completed_at
+        timestamptz saved_or_renewed_at
+        timestamptz first_closed_at
+        timestamptz access_until
+        timestamptz purge_after
+        timestamptz revoked_at
+    }
+    review_events {
+        bigint id PK
+        bigint review_id FK
+        bigint actor_user_id FK
+        text event_type
+        text notes
+        bigint amends_event_id FK
+        timestamptz recorded_at
+    }
+    role_catalogue_versions {
+        bigint id PK
+        bigint job_family_id FK
+        integer version_number
+        text state
+        text source_licence
+        bigint reviewed_by FK
+        timestamptz published_at
+    }
+    role_criteria {
+        bigint id PK
+        bigint role_catalogue_version_id FK
+        text criterion_code
+        text importance
+        text description
+    }
+    saved_preparation_versions {
+        bigint id PK
+        bigint retention_scope_id FK
+        bigint candidate_user_id FK
+        integer slot_number
+        bigint cv_document_id FK
+        bigint comparison_id FK
+        text version_label
+        bigint report_artifact_id FK
+    }
+    sessions {
+        text id PK
+        bigint user_id FK
+        text payload
+        timestamptz last_activity_at
+        timestamptz expires_at
+    }
+    stage_exceptions {
+        bigint id PK
+        bigint application_id FK
+        bigint stage_id FK
+        bigint requested_by FK
+        text request_reason
+        text status
+        bigint decided_by FK
+        text decision_reason
+        timestamptz decided_at
+        timestamptz requested_at
+        uuid operation_key
+    }
+    stored_artifacts {
+        bigint id PK
+        bigint retention_scope_id FK
+        text kind
+        text private_storage_key
+        text content_sha256
+        text content_type
+        bigint byte_count
+        timestamptz created_at
+    }
+    users {
+        bigint id PK
+        text display_name
+        text email
+        text password_hash
+        timestamptz email_verified_at
+        boolean is_platform_admin
+        text status
+        timestamptz last_active_at
+        timestamptz inactivity_notice_at
+        timestamptz closed_at
+        timestamptz created_at
+    }
+    vacancies {
+        bigint id PK,FK
+        bigint organization_id FK
+        text slug
+        bigint created_by FK
+        text status
+        bigint effective_version_id FK
+        timestamptz created_at
+    }
+    vacancy_criteria {
+        bigint id PK
+        bigint vacancy_version_id FK
+        text criterion_code
+        text importance
+        text description
+    }
+    vacancy_moderation_reports {
+        bigint id PK
+        bigint vacancy_version_id FK
+        bigint reporter_user_id FK
+        bigint retention_scope_id FK
+        text reason
+        text status
+        bigint reviewed_by FK
+        text outcome_reason
+        timestamptz reviewed_at
+        text action_taken
+        timestamptz reported_at
+    }
+    vacancy_review_stages {
+        bigint id PK
+        bigint vacancy_version_id FK
+        text stage_type
+        text name
+        boolean is_required
+        integer sequence_order
+    }
+    vacancy_versions {
+        bigint id PK
+        bigint vacancy_id FK
+        integer version_number
+        bigint role_catalogue_version_id FK
+        text title
+        text description
+        text location
+        text experience_level
+        text workplace_type
+        text state
+        bigint created_by FK
+        timestamptz published_at
+    }
+    virus_scan_logs {
+        bigint id PK
+        bigint processing_operation_id FK
+        text scanner_version
+        text result
+        integer duration_ms
+        text threat_name
+        timestamptz scanned_at
+    }
+    users o|--o{ application_events : "actor_user_id"
+    application_events o|--o{ application_events : "amends_event_id"
+    applications ||--o{ application_events : "application_id"
+    application_referrals o|--o{ application_events : "source_referral_id"
+    application_referrals o|--o{ application_referrals : "amends_id"
+    applications ||--o{ application_referrals : "application_id"
+    users o|--o{ application_referrals : "confirmed_by"
+    users ||--o{ application_referrals : "recorded_by"
+    users o|--o{ application_referrals : "referrer_user_id"
+    applications ||--o{ application_reviews : "application_id"
+    users ||--o{ application_reviews : "assigned_by"
+    users ||--o{ application_reviews : "assigned_to"
+    vacancy_review_stages ||--o{ application_reviews : "stage_id"
+    applications ||--o| application_snapshots : "application_id"
+    cv_documents ||--o{ applications : "cv_document_id"
+    retention_scopes ||--o| applications : "retention_scope_id"
+    campaign_submissions ||--o| applications : "submission_id"
+    vacancy_versions ||--o{ applications : "vacancy_version_id"
+    assessment_attempts ||--o{ assessment_answers : "attempt_id"
+    assessment_questions ||--o{ assessment_answers : "question_id"
+    assessment_invitations ||--o{ assessment_attempts : "invitation_id"
+    assessment_grades o|--o{ assessment_grades : "amends_id"
+    assessment_answers ||--o{ assessment_grades : "answer_id"
+    users o|--o{ assessment_grades : "grader_user_id"
+    applications ||--o{ assessment_invitations : "application_id"
+    assessment_versions ||--o{ assessment_invitations : "assessment_version_id"
+    users ||--o{ assessment_invitations : "issued_by"
+    vacancy_review_stages o|--o{ assessment_invitations : "stage_id"
+    assessment_versions ||--o{ assessment_questions : "assessment_version_id"
+    assessment_attempts ||--o| assessment_releases : "attempt_id"
+    users ||--o{ assessment_releases : "released_by"
+    assessments ||--o{ assessment_versions : "assessment_id"
+    users o|--o{ assessment_versions : "reviewed_by"
+    users ||--o{ assessments : "created_by"
+    vacancies ||--o{ assessments : "vacancy_id"
+    users o|--o{ audit_events : "actor_user_id"
+    organizations o|--o{ audit_events : "organization_id"
+    users ||--o{ auth_tokens : "user_id"
+    demonstration_entitlements o|--o{ campaign_allowances : "entitlement_id"
+    vacancies ||--o| campaign_allowances : "vacancy_id"
+    campaign_allowances ||--o{ campaign_submissions : "campaign_allowance_id"
+    users ||--o{ campaign_submissions : "candidate_user_id"
+    evidence_comparisons ||--o{ comparison_corrections : "comparison_id"
+    cv_extraction_corrections ||--o{ comparison_corrections : "correction_id"
+    evidence_comparisons ||--o{ comparison_criteria_matches : "evidence_comparison_id"
+    role_criteria o|--o{ comparison_criteria_matches : "role_criterion_id"
+    vacancy_criteria o|--o{ comparison_criteria_matches : "vacancy_criterion_id"
+    cv_passages ||--o{ cv_claims : "source_passage_id"
+    stored_artifacts ||--o| cv_documents : "artifact_id"
+    cv_claims o|--o{ cv_extraction_corrections : "cv_claim_id"
+    users ||--o{ cv_extraction_corrections : "requested_by"
+    users o|--o{ cv_extraction_corrections : "reviewed_by"
+    cv_passages ||--o{ cv_extraction_corrections : "source_passage_id"
+    cv_extraction_corrections o|--o{ cv_extraction_corrections : "supersedes_id"
+    processing_operations ||--o{ cv_extractions : "processing_operation_id"
+    cv_extractions ||--o{ cv_passages : "cv_extraction_id"
+    stored_artifacts o|--o{ data_subject_requests : "export_artifact_id"
+    organizations o|--o{ data_subject_requests : "organization_id"
+    users ||--o{ data_subject_requests : "requester_user_id"
+    retention_scopes ||--o{ data_subject_requests : "retention_scope_id"
+    users ||--o{ demonstration_entitlements : "granted_by"
+    organizations o|--o{ demonstration_entitlements : "organization_id"
+    users o|--o{ demonstration_entitlements : "user_id"
+    cv_extractions ||--o{ evidence_comparisons : "cv_extraction_id"
+    processing_manifests ||--o{ evidence_comparisons : "manifest_id"
+    role_catalogue_versions o|--o{ evidence_comparisons : "role_catalogue_version_id"
+    vacancy_versions o|--o{ evidence_comparisons : "vacancy_version_id"
+    users ||--o{ grader_assignments : "assigned_by"
+    assessment_attempts ||--o{ grader_assignments : "attempt_id"
+    users ||--o{ grader_assignments : "grader_user_id"
+    learning_guidance ||--o{ guidance_resources : "guidance_id"
+    learning_resources ||--o{ guidance_resources : "learning_resource_id"
+    users ||--o{ history_renewals : "actor_user_id"
+    saved_preparation_versions ||--o{ history_renewals : "saved_version_id"
+    users ||--o{ interview_events : "actor_user_id"
+    interview_events o|--o{ interview_events : "amends_id"
+    interview_schedules ||--o{ interview_events : "interview_id"
+    applications ||--o{ interview_schedules : "application_id"
+    users ||--o{ interview_schedules : "created_by"
+    vacancy_review_stages o|--o{ interview_schedules : "stage_id"
+    job_families o|--o{ job_alerts : "job_family_id"
+    users ||--o{ job_alerts : "user_id"
+    evidence_comparisons o|--o{ learning_guidance : "comparison_id"
+    processing_manifests ||--o{ learning_guidance : "manifest_id"
+    practice_sessions o|--o{ learning_guidance : "practice_session_id"
+    retention_scopes ||--o{ learning_guidance : "retention_scope_id"
+    role_catalogue_versions ||--o{ learning_guidance : "role_catalogue_version_id"
+    job_families ||--o{ learning_resources : "job_family_id"
+    users ||--o{ learning_resources : "reviewed_by"
+    comparison_criteria_matches ||--o{ match_evidence : "criterion_match_id"
+    cv_claims ||--o{ match_evidence : "cv_claim_id"
+    users ||--o{ membership_permissions : "granted_by"
+    memberships ||--o{ membership_permissions : "membership_id"
+    users ||--o{ memberships : "changed_by"
+    organizations ||--o{ memberships : "organization_id"
+    users ||--o{ memberships : "user_id"
+    users ||--o{ notifications : "recipient_user_id"
+    retention_scopes o|--o{ notifications : "retention_scope_id"
+    users ||--o{ organization_decisions : "actor_user_id"
+    organizations ||--o{ organization_decisions : "organization_id"
+    vacancies o|--o| organization_trial_ledger : "free_campaign_vacancy_id"
+    organizations ||--o| organization_trial_ledger : "organization_id"
+    users ||--o{ organizations : "created_by"
+    users ||--o{ passkeys : "user_id"
+    users o|--o{ practice_bank_versions : "reviewed_by"
+    role_catalogue_versions ||--o{ practice_bank_versions : "role_catalogue_version_id"
+    practice_bank_versions ||--o{ practice_questions : "bank_version_id"
+    practice_questions ||--o{ practice_responses : "practice_question_id"
+    practice_sessions ||--o{ practice_responses : "practice_session_id"
+    practice_bank_versions ||--o{ practice_sessions : "bank_version_id"
+    retention_scopes ||--o| practice_sessions : "retention_scope_id"
+    report_credit_reservations ||--o| preparation_reports : "credit_reservation_id"
+    stored_artifacts ||--o| preparation_reports : "artifact_id"
+    evidence_comparisons ||--o{ preparation_reports : "comparison_id"
+    cv_documents ||--o{ processing_operations : "cv_document_id"
+    processing_manifests ||--o{ processing_operations : "manifest_id"
+    applications ||--o{ professional_references : "application_id"
+    users ||--o{ professional_references : "recorded_by"
+    report_credit_reservations ||--o{ report_credit_events : "reservation_id"
+    demonstration_entitlements o|--o{ report_credit_periods : "additional_entitlement_id"
+    users ||--o{ report_credit_periods : "user_id"
+    report_credit_periods ||--o{ report_credit_reservations : "period_id"
+    stored_artifacts ||--o| report_revisions : "artifact_id"
+    evidence_comparisons ||--o{ report_revisions : "comparison_id"
+    users ||--o{ report_revisions : "created_by"
+    preparation_reports ||--o{ report_revisions : "preparation_report_id"
+    organizations o|--o{ retention_scopes : "organization_id"
+    users o|--o{ retention_scopes : "owner_user_id"
+    users ||--o{ review_events : "actor_user_id"
+    review_events o|--o{ review_events : "amends_event_id"
+    application_reviews ||--o{ review_events : "review_id"
+    job_families ||--o{ role_catalogue_versions : "job_family_id"
+    users o|--o{ role_catalogue_versions : "reviewed_by"
+    role_catalogue_versions ||--o{ role_criteria : "role_catalogue_version_id"
+    users ||--o{ saved_preparation_versions : "candidate_user_id"
+    evidence_comparisons ||--o| saved_preparation_versions : "comparison_id"
+    cv_documents ||--o| saved_preparation_versions : "cv_document_id"
+    stored_artifacts ||--o{ saved_preparation_versions : "report_artifact_id"
+    retention_scopes ||--o| saved_preparation_versions : "retention_scope_id"
+    users o|--o{ sessions : "user_id"
+    applications ||--o{ stage_exceptions : "application_id"
+    users o|--o{ stage_exceptions : "decided_by"
+    users ||--o{ stage_exceptions : "requested_by"
+    vacancy_review_stages ||--o{ stage_exceptions : "stage_id"
+    retention_scopes ||--o{ stored_artifacts : "retention_scope_id"
+    vacancy_versions o|--o| vacancies : "effective_version_id,id"
+    users ||--o{ vacancies : "created_by"
+    organizations ||--o{ vacancies : "organization_id"
+    vacancy_versions ||--o{ vacancy_criteria : "vacancy_version_id"
+    users ||--o{ vacancy_moderation_reports : "reporter_user_id"
+    retention_scopes ||--o{ vacancy_moderation_reports : "retention_scope_id"
+    users o|--o{ vacancy_moderation_reports : "reviewed_by"
+    vacancy_versions ||--o{ vacancy_moderation_reports : "vacancy_version_id"
+    vacancy_versions ||--o{ vacancy_review_stages : "vacancy_version_id"
+    users ||--o{ vacancy_versions : "created_by"
+    role_catalogue_versions ||--o{ vacancy_versions : "role_catalogue_version_id"
+    vacancies ||--o{ vacancy_versions : "vacancy_id"
+    processing_operations ||--o{ virus_scan_logs : "processing_operation_id"
