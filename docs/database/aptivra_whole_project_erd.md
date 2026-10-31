@@ -6,14 +6,14 @@ This is the proposed database design for the complete project, not a claim that 
 
 ## Open these files
 
-| File | Purpose |
-|---|---|
-| `Aptivra_Whole_Project_ERD.pdf` | Visual deliverable: one master ERD followed by 12 capability detail views. Vector text/lines remain sharp when zoomed. |
-| `aptivra_whole_project_schema.sql` | Standalone import source: 72 base tables, 158 foreign keys and 265 indexes in `aptivra_design`. |
-| `ERD_AUDIT_2026-10-27.md` | Changes, normalization exceptions, complete 36-use-case mapping, table inventory, test results and remaining responsibilities. |
-| `diagrams/` | Editable SVG and Mermaid sources plus PNG previews for the same 13 views. |
-| `aptivra_whole_project_erd.mmd` | Complete editable Crow's Foot Mermaid source. |
-| `erd_final_checks.json` | Machine-readable checks and exact source/PDF hashes. |
+| File                               | Purpose                                                                                                                        |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `Aptivra_Whole_Project_ERD.pdf`    | Visual deliverable: one master ERD followed by 12 capability detail views. Vector text/lines remain sharp when zoomed.         |
+| `aptivra_whole_project_schema.sql` | Standalone import source: 72 base tables, 158 foreign keys and 265 indexes in `aptivra_design`.                                |
+| `ERD_AUDIT_2026-10-27.md`          | Changes, normalization exceptions, complete 36-use-case mapping, table inventory, test results and remaining responsibilities. |
+| `diagrams/`                        | Editable SVG and Mermaid sources plus PNG previews for the same 13 views.                                                      |
+| `aptivra_whole_project_erd.mmd`    | Complete editable Crow's Foot Mermaid source.                                                                                  |
+| `erd_final_checks.json`            | Machine-readable checks and exact source/PDF hashes.                                                                           |
 
 The corrected design passed 63 targeted PostgreSQL tests with no failures, including simultaneous requests for the last report credit and last campaign application slot. All foreign keys have a suitable leading-column index. The PDF and editable diagrams are generated from the actual imported catalogue, not a separately maintained drawing.
 
